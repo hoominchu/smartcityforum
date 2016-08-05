@@ -25,3 +25,5 @@ Instructions to set up Smart City Forum
 7.	Create a folder in webapps named 'smartcityData'. 
 
 It might take a few minutes when you hit the 'index.jsp for the first time. 
+
+Customizations can be done by editing 'src/main/resources/config.properties' file. 
