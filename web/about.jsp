@@ -37,51 +37,17 @@
     <div class="row">
         <div class="col-xs-8">
             <div id="about-project">
-                <p>This project aims at creating software that helps make sense of the data being collected by
-                    Hubli-Dharwad
-                    Municipal Corporation. It will help bring transparency in the system by making all the information
-                    available
-                    to
-                    public in an easily understandable format. This will also help smoothen processes in the offices by
-                    letting
-                    people access information easily.</p>
+                <p>The Smart City Forum project helps local governments be transparent and get feedback from citizens about their public works. It is based on the principle of open data and citizen participation in local government. As a demonstration, it is being deployed with the data provided by the Hubballi-Dharwad Municipal Corporation (HDMC) in the state of Karnataka in India at <a href="http://hack4hd.org/smartcity">hack4hd.org</a>.</p>
 
-                <p>This project has two main components. The first component of the project is to build tools for
-                    administrators
-                    and local political leaders which help in making better decisions. For example, the commissioner of
-                    HDMC
-                    will be
-                    able to look at the dashboard to get information about ward wise expenditure, number of works in
-                    progress,
-                    total
-                    amount of funds, funds already used up and so on. With the help of maps he/she can get a clear
-                    picture of
-                    where
-                    the work is being done. The commissioner can also monitor the works by checking the images submitted
-                    by the
-                    contractors and see if the citizens are satisfied by looking at their comments on the works.</p>
+                <p>This project has two main uses. The first use is for city administrators and local political leaders to track their own works and spending, leading to more clarity in decision-making. For example, city managers can look at the dashboard of ongoing works, get information about ward wise expenditure, funding patterns, visualize various parameters on a map, etc. They can also monitor the works by checking both official and citizen-submitted images and comments.</p>
 
-                <p>Second component aims at making this a portal for Hubli-Dharwad citizens to track what is happening
-                    around
-                    them in the city. This will help people participate actively in the development of their city and
-                    thus
-                    become responsible citizens. The contact information of the corporators/concerned persons will also
-                    be made
-                    public and easily accessible. It will be of great help if any citizen, who experiences inconvenience
-                    due to
-                    some
-                    civic work going on in his/her area, can get to know the details of the work such as who is the
-                    contractor,
-                    when
-                    should it be completed, how much is the amount sanctioned for the project and so on. People can also
-                    comment
-                    on
-                    any work and discuss about it with fellow citizens thus creating a productive social network space.
-                </p>
+                <p>The second use is for citizens to actively track what is happening around them in their city. A citizen can easily find information about publicly funded works in their ward, or anywhere else. For example, people can get information on the detailed work specifications, funding for the work, precise GPS coordinates of the work, etc. Further, they can directly comment on works and upload their own pictures to give accurate, on-the-ground feedback to city officials, and discuss the project with other citizens.</p>
 
-                <p>If you are interested in working with us please email us at <b>inspection.hdmc@gmail.com</b>.</p>
+                <p>Other cities can easily adopt this software by plugging in their data in a simple, CSV based format. It is free and open source. Contact Prof. Hangal at the Trivedi Center for Political Data (hangal@ashoka.edu.in) for more information. Software developers interested in contributing extensions are also welcome.</p>
 
-                <p>This project was started as a part of <a href="http://hack4hd.org">hack4hd.org</a>. </p>
+                <p>This project was started as a part of a Smart City Hackathon held in Hubballi Dharwad (hack4hd.org), and developed further by the Trivedi Center for Political Data.</p>
+
+                <p>Citizens of Hubballi-Dharwad are invited to give us feedback, suggestions and comments via email at inspection.hdmc@gmail.com.</p>
             </div>
         </div>
         <div class="col-xs-4">
