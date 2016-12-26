@@ -125,10 +125,17 @@
         })(document);
     </script>
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
         ga('create', 'UA-79399673-1', 'auto');
         ga('send', 'pageview');
@@ -177,7 +184,7 @@
                     } else {
                     %>
                     <img class="round-corner" height="160em"
-                         src="https://pixabay.com/static/uploads/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                         src="images/pp-placeholder.png">
                     <%
                         }
                     %>
@@ -365,10 +372,7 @@
                 <th style="width: 30%; padding: 2px; text-align: left">Work Description</th>
                 <th style="width: 8%; padding: 2px; text-align: center">Work Order Date</th>
                 <th style="width: 8%; padding: 2px; text-align: center">Work Completion Date</th>
-                <th style="width: 9%; padding: 2px; text-align: center">Work Type</th>
-                <th style="width: 11%; padding: 2px; text-align: center">Minor Work Type</th>
                 <th style="width: 3%; padding: 2px; text-align: center">Year</th>
-                <th style="width: 8%; padding: 2px; text-align: center">Source Of Funding</th>
                 <th style="width: 7%; padding: 2px; text-align: center">Amount Sanctioned</th>
                 <th style="width: 6%; padding: 2px; text-align: center">Bill Paid</th>
                 <th style="width: 7%; padding: 2px; text-align: center">Difference</th>
@@ -464,6 +468,19 @@
                         }
                     %>
                     <br>
+                    Work ID : <a href="workDetails.jsp?workID=<%=workID%>&jumbotron=billDetails"><%=workID%>
+                </a>
+                    <br>
+                    Minor Work Type : <a href="<%=baseLink%><%=dynamicLink%>minorID=<%=minorID%>"><%=minorIDMeaning%>
+                </a>
+                    <br>
+                    Work Type : <a href="<%=baseLink%><%=dynamicLink%>workTypeID=<%=workTypeID%>"><%=workType%>
+                </a>
+                    <br>
+                    Source of Income : <a
+                        href="<%=baseLink%><%=dynamicLink%>sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=sourceOfIncome%>
+                </a>
+                    <br><br>
                     Contractor : <a href="<%=baseLink%><%=dynamicLink%>contractorID=<%=contractorID%>"><%=contractor%>
                 </a>
                     <br>
@@ -478,19 +495,9 @@
                 <td sorttable_customkey="<%=General.customSortKeySortTableJS(workCompletionDate)%>"
                     style="text-align: center; color: <%=dateColor%>"><%=workCompletionDate%>
                 </td>
-                <td style="text-align: center"><a
-                        href="<%=baseLink%><%=dynamicLink%>workTypeID=<%=workTypeID%>"><%=workType%>
-                </a>
-                <td style="text-align: center; padding-left: 0.2em"><a
-                        href="<%=baseLink%><%=dynamicLink%>minorID=<%=minorID%>"><%=minorIDMeaning%>
-                </a>
-                </td>
+
                 <td style="text-align: center"><a
                         href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
-                </a>
-                </td>
-                <td style="text-align: center; overflow: hidden"><a
-                        href="<%=baseLink%><%=dynamicLink%>sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=sourceOfIncome%>
                 </a>
                 </td>
                 <td style="text-align: center"><%=General.rupeeFormat(amountSanctionedString)%>

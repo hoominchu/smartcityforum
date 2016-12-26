@@ -257,6 +257,14 @@
                         </thead>
                         <tbody>
                         <tr>
+                            <td style="text-align: right; width: 50%"> Work ID :</td>
+                            <td style="text-align: left"><b><a
+                                    href="<%=worksPage%>workID=<%=work.get(0).workID%>"><%=work.get(0).workID%>
+                            </a>
+                            </b>
+                            </td>
+                        </tr>
+                        <tr>
                             <td style="text-align: right; width: 50%"> Ward :</td>
                             <td style="text-align: left"><b><a
                                     href="<%=worksPage%>wardNumber=<%=work.get(0).wardNumber%>"><%=work.get(0).wardNumber%>
