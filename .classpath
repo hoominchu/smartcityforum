@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry exported="true" kind="lib" path="lib/mongo-java-driver-3.2.2.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.mongodb:mongo-java-driver:3.2.2"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.apache.commons.io.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/google-api-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/google-http-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/google-oauth-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/analyzers-common"/>
+	<classpathentry exported="true" kind="lib" path="lib/xmpcore-5.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/metadata-extractor-2.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/jackson-core-2.7.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/json-20160212.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/oauth/google-http-client-jackson2-1.22.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xercesImpl-2.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javax.servlet-5.1.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.apache.commons.fileupload.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.4.jar"/>
+	<classpathentry exported="true" kind="src" path="resources/config.properties"/>
+</classpath>
