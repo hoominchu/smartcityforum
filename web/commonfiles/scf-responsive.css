@@ -1,0 +1,31 @@
+@media screen and (max-width: 750px) and (min-width: 350px) {
+    img.logo-organization {
+        width: 80px;
+        height: 80px;
+    }
+
+    img.logo-smartcity {
+        width: 80px;
+        height: 80px;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 751px) {
+    img.logo-organization {
+        width: 150px;
+        height: 150px;
+    }
+
+    img.logo-smartcity {
+        width: 150px;
+        height: 150px;
+    }
+
+    .header-title {
+        font-size: 35px;
+    }
+}

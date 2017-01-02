@@ -18,7 +18,7 @@
 
 </script>
 <%
-    String redirectURL = "works.jsp?recent=true";
+    String redirectURL = "browse.jsp";
     response.sendRedirect(redirectURL);
 %>
 

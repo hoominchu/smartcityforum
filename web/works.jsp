@@ -72,9 +72,14 @@
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
     <script src="commonfiles/sorttable.js"></script>
     <link rel="stylesheet" href="commonfiles/bootstrap.css">
-    <script src="commonfiles/jquery.min.js"></script>
+    <link rel="stylesheet" href="commonfiles/custom.min.css">
+    <link rel="stylesheet" href="commonfiles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
     <script src="commonfiles/addons.js"></script>
+    <script src="commonfiles/custom.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -211,7 +216,7 @@
                         for (String number : phoneNumbers) {
                     %>
                     <a href="tel:<%=number%>"><i class="fa fa-phone" aria-hidden="true"></i> <%=number%>
-                    </a> |
+                    </a> &nbsp;&nbsp;
                     <%
                             }
                         }
@@ -227,7 +232,7 @@
 
         <div class="row">
             <div class="panel panel-default round-corner"
-                 style="text-align: center; width: 20%; display: inline-block; margin-right: -5em; margin-left: 1em">
+                 style="text-align: center; width: 20%; min-width: 200px; display: inline-block; margin-left: 1em">
                 <div class="panel-heading round-corner-top">Overview</div>
                 <div class="panel-body round-corner " style="height: 25em">
                     Number of Works
@@ -253,7 +258,7 @@
             </div>
 
             <div class="panel panel-default round-corner pull-right"
-                 style="text-align: center; width: 75%; display: inline-block; margin-left: -4em; margin-right: 1em">
+                 style="text-align: center; width: 75%; display: inline-block; margin-right: 1em">
                 <div class="panel-heading round-corner-top">Dashboard</div>
                 <div class="panel-body round-corner">
                     <div id="loading-chart-gif" style="height: 10em; width: 100%;">
@@ -364,7 +369,7 @@
         </button>
 
         <table class="table table-striped table-responsive sortable searchable" id="myTable"
-               style="margin-top:2em; width: 100%; table-layout: fixed">
+               style="margin-top:2em; width: 100%; min-width: 750px; table-layout: fixed">
 
             <thead>
             <tr>
@@ -372,10 +377,7 @@
                 <th style="width: 30%; padding: 2px; text-align: left">Work Description</th>
                 <th style="width: 8%; padding: 2px; text-align: center">Work Order Date</th>
                 <th style="width: 8%; padding: 2px; text-align: center">Work Completion Date</th>
-                <th style="width: 3%; padding: 2px; text-align: center">Year</th>
                 <th style="width: 7%; padding: 2px; text-align: center">Amount Sanctioned</th>
-                <th style="width: 6%; padding: 2px; text-align: center">Bill Paid</th>
-                <th style="width: 7%; padding: 2px; text-align: center">Difference</th>
             </tr>
             </thead>
             <tbody>
@@ -436,7 +438,7 @@
                 </td>
 
                 <td>
-                    <a href="workDetails.jsp?workID=<%=workID%>&jumbotron=billDetails">
+                    <a href="workDetails.jsp?workID=<%=workID%>&jumbotron=info">
                         <%=workDescriptionFinal%>
                     </a>
                     <br>
@@ -480,7 +482,43 @@
                     Source of Income : <a
                         href="<%=baseLink%><%=dynamicLink%>sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=sourceOfIncome%>
                 </a>
-                    <br><br>
+                    <br>
+                    Year : <a href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
+                </a>
+                    <br>
+                    Bill : &nbsp;
+                    <span style="text-align: center; color: <%=billPaidColor%>">
+                    <%
+                        if (billPaid > 0) {
+                    %>&#8377;&nbsp;<%=General.rupeeFormat(billPaid.toString())%>
+                    <%
+                    } else {
+                    %>
+                    Not paid
+                    <%
+                        }
+                    %>
+                </span>
+                    <br>
+                    Difference : &nbsp;
+                <span style="text-align: center; color: <%=billPaidColor%>">
+                    <%
+                        if (difference != 0 && billPaid > 0) {
+                    %>&#8377;&nbsp;<%=General.rupeeFormat(difference)%>
+                    <%
+                    } else if (difference == 0) {
+                    %>
+                    Exact amount has been paid
+                    <%
+                    } else if (billPaid == 0) {
+                    %>
+                    NA
+                    <%
+                        }
+                    %>
+                </span>
+                    <br>
+                    <br>
                     Contractor : <a href="<%=baseLink%><%=dynamicLink%>contractorID=<%=contractorID%>"><%=contractor%>
                 </a>
                     <br>
@@ -495,41 +533,9 @@
                 <td sorttable_customkey="<%=General.customSortKeySortTableJS(workCompletionDate)%>"
                     style="text-align: center; color: <%=dateColor%>"><%=workCompletionDate%>
                 </td>
+                <td style="text-align: center">&#8377;&nbsp;<%=General.rupeeFormat(amountSanctionedString)%>
+                </td>
 
-                <td style="text-align: center"><a
-                        href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
-                </a>
-                </td>
-                <td style="text-align: center"><%=General.rupeeFormat(amountSanctionedString)%>
-                </td>
-                <td style="text-align: center; color: <%=billPaidColor%>">
-                    <%
-                        if (billPaid > 0) {
-                    %><%=General.rupeeFormat(billPaid.toString())%>
-                    <%
-                    } else {
-                    %>
-                    Not paid
-                    <%
-                        }
-                    %>
-                </td>
-                <td style="text-align: center; color: <%=billPaidColor%>">
-                    <%
-                        if (difference != 0 && billPaid > 0) {
-                    %><%=General.rupeeFormat(difference)%>
-                    <%
-                    } else if (difference == 0) {
-                    %>
-                    Exact amount has been paid
-                    <%
-                    } else if (billPaid == 0) {
-                    %>
-                    NA
-                    <%
-                        }
-                    %>
-                </td>
             </tr>
             <%
                     }

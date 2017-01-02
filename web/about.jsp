@@ -17,9 +17,14 @@
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
     <script src="commonfiles/sorttable.js"></script>
     <link rel="stylesheet" href="commonfiles/bootstrap.css">
-    <script src="commonfiles/jquery.min.js"></script>
+    <link rel="stylesheet" href="commonfiles/custom.min.css">
+    <link rel="stylesheet" href="commonfiles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <script src="commonfiles/addons.js"></script>
+    <script src="commonfiles/custom.js"></script>
 
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick-theme.css"/>

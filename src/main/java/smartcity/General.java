@@ -133,15 +133,15 @@ public class General {
 
     public static Calendar createDate(String dateString) {
 
-        dateString = dateString.substring(0, 7) + "20" + dateString.substring(7);
+        dateString = dateString.substring(0, 6) + "20" + dateString.substring(6);
 
         Calendar date = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 
         try {
             date.setTime(dateFormat.parse(dateString));
         } catch (ParseException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return date;
@@ -170,9 +170,9 @@ public class General {
 
     public static String customSortKeySortTableJS(String dateString) {
 
-        dateString = dateString.substring(0, 7) + "20" + dateString.substring(7);
+        dateString = dateString.substring(0, 6) + "20" + dateString.substring(6);
 
-        DateFormat originalFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        DateFormat originalFormat = new SimpleDateFormat("mm/dd/yyyy");
         DateFormat targetFormat = new SimpleDateFormat("yyyyMMdd");
         String retString = "";
 
@@ -181,7 +181,7 @@ public class General {
             String formattedDate = targetFormat.format(date);
             retString = formattedDate + "000000";
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return retString;
     }

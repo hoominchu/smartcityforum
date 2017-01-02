@@ -13,7 +13,7 @@ public class HelloWorld extends HttpServlet {
     public void init(){
         System.out.println("Hello World!");
 
-        EveryNightScripts.updateDB();
+        //EveryNightScripts.updateDB();
         Contractor.createContractors();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

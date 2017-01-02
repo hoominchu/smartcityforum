@@ -102,9 +102,14 @@
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
     <script src="commonfiles/sorttable.js"></script>
     <link rel="stylesheet" href="commonfiles/bootstrap.css">
-    <script src="commonfiles/jquery.min.js"></script>
+    <link rel="stylesheet" href="commonfiles/custom.min.css">
+    <link rel="stylesheet" href="commonfiles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
     <script src="commonfiles/addons.js"></script>
+    <script src="commonfiles/custom.js"></script>
     <script src="commonfiles/maps.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script>

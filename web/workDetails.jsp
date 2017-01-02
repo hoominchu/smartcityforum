@@ -60,9 +60,14 @@
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
     <script src="commonfiles/sorttable.js"></script>
     <link rel="stylesheet" href="commonfiles/bootstrap.css">
-    <script src="commonfiles/jquery.min.js"></script>
+    <link rel="stylesheet" href="commonfiles/custom.min.css">
+    <link rel="stylesheet" href="commonfiles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
     <script src="commonfiles/addons.js"></script>
+    <script src="commonfiles/custom.js"></script>
 
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick-theme.css"/>
@@ -136,8 +141,9 @@
     </div>
 
     <div class="btn-group btn-group-justified">
-        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=billDetails"
-           class="btn btn-default round-corner-top-left">Billing Details</a>
+        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=info"
+           class="btn btn-default round-corner-top-left">Work Info</a>
+
         <%
             if (Work.doesFileExist(rootFolder + workIDParameter + File.separator, ".kml")) {
         %>
@@ -145,8 +151,14 @@
         <%
             }
         %>
-        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=info"
-           class="btn btn-default round-corner-top-right">Work Info</a>
+        <%
+            if (work.get(0).billPaid > 0) {
+        %>
+        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=billDetails"
+           class="btn btn-default round-corner-top-right">Billing Details</a>
+        <%
+            }
+        %>
     </div>
 
     <div class="jumbotron round-corner-bottom" style="padding: 0; margin-bottom: 2em">
