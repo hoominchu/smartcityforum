@@ -17,6 +17,9 @@
 
 <%
     try {
+        String email = (String) session.getAttribute("email");
+        Boolean subscription = false;
+
         String rootFolder;
         if (request.getRequestURL().toString().contains(LoadProperties.properties.getString("WebsiteName"))) {
             rootFolder = LoadProperties.properties.getString("PathToStoreWorksDataOnWeb");
@@ -25,6 +28,13 @@
         }
 
         String workIDParameter = StringEscapeUtils.escapeHtml4(request.getParameter("workID"));
+
+        //checking if the person is subscribed to the work if logged in
+        if (email != null) {
+            Alerts alerts = new Alerts();
+            subscription = alerts.checkIfSubscribedToField1(email, Integer.parseInt(workIDParameter));
+        }
+
         String jumbotronParameter = StringEscapeUtils.escapeHtml4(request.getParameter("jumbotron"));
 
         String baseLink = "workDetails.jsp?";
@@ -123,6 +133,18 @@
         }
     </script>
 
+    <%--Javascript funcitons for subscribe and unsubscribe--%>
+    <script>
+        function subscribe() {
+            document.getElementById("subscribeButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=false&workID=<%=workIDParameter%>"
+        }
+        function unsubscribe() {
+            document.getElementById("unsubscribeButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=true&workID=<%=workIDParameter%>"
+        }
+    </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initMap"
             async defer></script>
 </head>
@@ -138,6 +160,24 @@
         <div class="panel-body round-corner">
             <%=General.cleanText(work.get(0).workDescriptionEnglish)%>
         </div>
+        <%
+            if (!subscription) {
+        %>
+        <%--button to subscribe--%>
+        <button id="subscribeButton" class="btn btn-info btn-block round-corner-bottom" style="font-size: 15px;"
+                onclick="subscribe()" >I am
+            interested in this work!
+        </button>
+        <%
+        } else {
+        %>
+        <%--button to unsubscribe--%>
+        <button id="unsubscribeButton" class="btn btn-info btn-block round-corner-bottom" style="font-size: 15px;"
+                onclick="unsubscribe()" > Unsubscribe
+        </button>
+        <%
+            }
+        %>
     </div>
 
     <div class="btn-group btn-group-justified">

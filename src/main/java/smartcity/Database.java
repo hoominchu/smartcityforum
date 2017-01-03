@@ -22,5 +22,6 @@ public class Database {
     final public static DBCollection workNotes = db.getCollection(LoadProperties.properties.getString("Database.workNotes"));
     final public static DBCollection authorizedEmails = db.getCollection(LoadProperties.properties.getString("Database.authorizedEmails"));
     final public static DBCollection superUsers = db.getCollection(LoadProperties.properties.getString("Database.superusers"));
+    final public static DBCollection subscribers = db.getCollection(LoadProperties.properties.getString("Database.subscribers"));
 
 }
