@@ -195,34 +195,37 @@
                     %>
                 </div>
 
-                <h4>
-                    Ward Number : <%=wardNumberParameter%>
-                    <%
-                        if (Integer.parseInt(wardNumberParameter) > 67) {
-                    %>| Ward meaning : <%=wardMeaning%>
-                    <%
-                    } else {
-                    %>
-                    | Population
-                    <small>(Census of 2011)</small>
-                    : <%=General.rupeeFormat(population2011)%>
-                    <br>
-                    <hr>
+                <div style="display: inline-block">
+                    <h4>
+                        Ward Number : <%=wardNumberParameter%>
+                        <%
+                            if (Integer.parseInt(wardNumberParameter) > 67) {
+                        %>| Ward meaning : <%=wardMeaning%>
+                        <%
+                        } else {
+                        %>
+                        | Population
+                        <small>(Census of 2011)</small>
+                        : <%=General.rupeeFormat(population2011)%>
+                        <br>
+                        <hr>
 
-                    Corporator : <%=corporatorKannada%> | <%=corporatorEnglish%> <b> | </b> Party : <%=partyKannada%>
-                    | <%=partyEnglish%> <br><br>
-                    <%
-                        String[] phoneNumbers = contactNumber.split(",");
-                        for (String number : phoneNumbers) {
-                    %>
-                    <a href="tel:<%=number%>"><i class="fa fa-phone" aria-hidden="true"></i> <%=number%>
-                    </a> &nbsp;&nbsp;
-                    <%
+                        Corporator : <%=corporatorKannada%> | <%=corporatorEnglish%> <b> | </b> Party
+                        : <%=partyKannada%>
+                        | <%=partyEnglish%> <br><br>
+                        <%
+                            String[] phoneNumbers = contactNumber.split(",");
+                            for (String number : phoneNumbers) {
+                        %>
+                        <a href="tel:<%=number%>"><i class="fa fa-phone" aria-hidden="true"></i> <%=number%>
+                        </a> &nbsp;&nbsp;
+                        <%
+                                }
                             }
-                        }
-                    %>
+                        %>
 
-                </h4>
+                    </h4>
+                </div>
             </div>
         </div>
 
@@ -471,6 +474,7 @@
                     %>
                     <br>
                     Work ID : <a href="workDetails.jsp?workID=<%=workID%>&jumbotron=billDetails"><%=workID%>
+                </a> | Year : <a href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
                 </a>
                     <br>
                     Minor Work Type : <a href="<%=baseLink%><%=dynamicLink%>minorID=<%=minorID%>"><%=minorIDMeaning%>
@@ -482,42 +486,40 @@
                     Source of Income : <a
                         href="<%=baseLink%><%=dynamicLink%>sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=sourceOfIncome%>
                 </a>
-                    <br>
-                    Year : <a href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
-                </a>
-                    <br>
-                    Bill : &nbsp;
-                    <span style="text-align: center; color: <%=billPaidColor%>">
-                    <%
-                        if (billPaid > 0) {
-                    %>&#8377;&nbsp;<%=General.rupeeFormat(billPaid.toString())%>
-                    <%
-                    } else {
-                    %>
-                    Not paid
-                    <%
-                        }
-                    %>
-                </span>
-                    <br>
-                    Difference : &nbsp;
-                <span style="text-align: center; color: <%=billPaidColor%>">
-                    <%
-                        if (difference != 0 && billPaid > 0) {
-                    %>&#8377;&nbsp;<%=General.rupeeFormat(difference)%>
-                    <%
-                    } else if (difference == 0) {
-                    %>
-                    Exact amount has been paid
-                    <%
-                    } else if (billPaid == 0) {
-                    %>
-                    NA
-                    <%
-                        }
-                    %>
-                </span>
-                    <br>
+                    <%--<br>--%>
+                    <%--Bill : &nbsp;--%>
+                    <%--<span style="text-align: center; color: <%=billPaidColor%>">--%>
+                    <%--<%--%>
+                    <%--if (billPaid > 0) {--%>
+                    <%--%>&#8377;&nbsp;<%=General.rupeeFormat(billPaid.toString())%>--%>
+                    <%--<%--%>
+                    <%--} else {--%>
+                    <%--%>--%>
+                    <%--Not paid--%>
+                    <%--<%--%>
+                    <%--}--%>
+                    <%--%>--%>
+                    </span>
+
+                    <%--<br>--%>
+                    <%--Difference : &nbsp;--%>
+                    <%--<span style="text-align: center; color: <%=billPaidColor%>">--%>
+                    <%--<%--%>
+                    <%--if (difference != 0 && billPaid > 0) {--%>
+                    <%--%>&#8377;&nbsp;<%=General.rupeeFormat(difference)%>--%>
+                    <%--<%--%>
+                    <%--} else if (difference == 0) {--%>
+                    <%--%>--%>
+                    <%--Exact amount has been paid--%>
+                    <%--<%--%>
+                    <%--} else if (billPaid == 0) {--%>
+                    <%--%>--%>
+                    <%--NA--%>
+                    <%--<%--%>
+                    <%--}--%>
+                    <%--%>--%>
+                    <%--</span>--%>
+                    <%--<br>--%>
                     <br>
                     Contractor : <a href="<%=baseLink%><%=dynamicLink%>contractorID=<%=contractorID%>"><%=contractor%>
                 </a>
