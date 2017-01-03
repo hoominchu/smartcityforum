@@ -9,7 +9,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String redirectLink = "";
     String workIDParameter = request.getParameter("workID");
+    if (workIDParameter != null) {
+        redirectLink = "upload.jsp?workID="+workIDParameter;
+    }
+    else if (workIDParameter == null) {
+        System.out.println(request.getHeader("Referer"));
+        redirectLink = request.getHeader("Referer");
+    }
     try {
         String clientID;
         if (request.getRequestURL().toString().contains(LoadProperties.properties.getString("WebsiteName"))) {
@@ -29,7 +37,14 @@
     <script src="commonfiles/jquery.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="commonfiles/custom.min.css">
+    <link rel="stylesheet" href="commonfiles/bootstrap-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="commonfiles/bootstrap.min.js"></script>
+    <script src="commonfiles/addons.js"></script>
+    <script src="commonfiles/custom.js"></script>
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick-theme.css"/>
 
@@ -82,7 +97,7 @@
                 $('#info-modal .modal-title #spinner').remove();
                 if (response && response.status == 0) {
                     //location.pathname = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+ 'dashboard');
-                    window.location = "upload.jsp?workID="+<%=workIDParameter%>;
+                    window.location = "<%=redirectLink%>";
                 }
                 else {
                     //LOG("Showing error");

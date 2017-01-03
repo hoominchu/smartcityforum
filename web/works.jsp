@@ -176,7 +176,7 @@
                 String imgURL = corporatorDetails[5];
         %>
 
-        <div class="panel panel-default round-corner" style="text-align: center">
+        <div class="panel panel-default round-corner wardifno-box" style="text-align: center; width: 100%">
             <div class="panel-heading round-corner-top">Ward Info</div>
             <div class="panel-body">
 
@@ -234,8 +234,8 @@
         %>
 
         <div class="row">
-            <div class="panel panel-default round-corner"
-                 style="text-align: center; width: 20%; min-width: 200px; display: inline-block; margin-left: 1em">
+            <div class="panel panel-default round-corner overview-box"
+                 style="text-align: center;min-width: 200px; display: inline-block;">
                 <div class="panel-heading round-corner-top">Overview</div>
                 <div class="panel-body round-corner " style="height: 25em">
                     Number of Works
@@ -260,8 +260,8 @@
                 </div>
             </div>
 
-            <div class="panel panel-default round-corner pull-right"
-                 style="text-align: center; width: 75%; display: inline-block; margin-right: 1em">
+            <div class="panel panel-default round-corner pull-right chart-box"
+                 style="text-align: center;display: inline-block;">
                 <div class="panel-heading round-corner-top">Dashboard</div>
                 <div class="panel-body round-corner">
                     <div id="loading-chart-gif" style="height: 10em; width: 100%;">
@@ -356,22 +356,22 @@
                 dismissalLink = dismissalLink.substring(0, dismissalLink.lastIndexOf("&"));
         %>
     <span class="label label-primary round-corner"
-          style="font-size: 1.1em;"><%=click.parameterPresentable%> : <%=click.parameterValuePresentable%> <a
+          style="font-size: 1.1em; margin-bottom: 0.2em; display: inline-block"><%=click.parameterPresentable%> : <%=click.parameterValuePresentable%> <a
             href=<%=dismissalLink%>> <i class="fa fa-times-circle white-icon" style="color: white"
                                         aria-hidden="true"></i></a></span>
         <%
             }
         %>
 
-        <input type="search" class="light-table-filter form-control col-xs-12 round-corner" data-table="searchable"
-               placeholder="Search in displayed results..." style="margin-bottom: 1em; margin-top: 1em">
+        <%--<input type="search" class="light-table-filter form-control col-xs-12 round-corner" data-table="searchable"--%>
+               <%--placeholder="Search in displayed results..." style="margin-bottom: 1em; margin-top: 1em">--%>
 
-        <button class="btn btn-default pull-right round-corner-top"
-                onclick="$('#myTable').tableExport({type:'csv',escape:'false'});" href="#">
-            Download Results
-        </button>
+        <%--<button class="btn btn-default pull-right round-corner-top"--%>
+                <%--onclick="$('#myTable').tableExport({type:'csv',escape:'false'});" href="#">--%>
+            <%--Download Results--%>
+        <%--</button>--%>
 
-        <table class="table table-striped table-responsive sortable searchable" id="myTable"
+        <table class="table table-responsive sortable searchable" id="myTable"
                style="margin-top:2em; width: 100%; min-width: 750px; table-layout: fixed">
 
             <thead>
@@ -477,6 +477,7 @@
                 </a> | Year : <a href="<%=baseLink%><%=dynamicLink%>year=<%=year%>"><%=year%>
                 </a>
                     <br>
+
                     Minor Work Type : <a href="<%=baseLink%><%=dynamicLink%>minorID=<%=minorID%>"><%=minorIDMeaning%>
                 </a>
                     <br>

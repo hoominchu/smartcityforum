@@ -1,4 +1,4 @@
-@media screen and (max-width: 750px) and (min-width: 350px) {
+@media screen and (max-width: 750px) {
     img.logo-organization {
         width: 80px;
         height: 80px;
@@ -11,6 +11,18 @@
 
     .header-title {
         font-size: 20px;
+    }
+
+    .chart-box {
+        width: 100%;
+    }
+
+    .overview-box {
+        width: 100%;
+    }
+
+    .wardifno-box {
+        width: 100%;
     }
 }
 
@@ -27,5 +39,15 @@
 
     .header-title {
         font-size: 35px;
+    }
+
+    .chart-box {
+        width: 70%;
+        margin-right: 1em;
+    }
+
+    .overview-box {
+        width: 23%;
+        margin-left: 2em;
     }
 }

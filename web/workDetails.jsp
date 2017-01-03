@@ -391,7 +391,7 @@
         if (Database.workDetails.find(workIDQuery).size() > 0) {
     %>
     <table class="table-striped table-responsive sortable" id="myTable"
-           style="margin-top:2em; width: 100%; table-layout: fixed">
+           style="margin-top:2em; width: 100%; min-width: 750px; table-layout: fixed">
         <thead>
         <tr>
             <th style="width: 3%; padding: 2px; text-align: center">Sl No.</th>
