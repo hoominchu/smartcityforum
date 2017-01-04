@@ -3,6 +3,8 @@
 <%@ page import="smartcity.Database" %>
 <%@ page import="smartcity.Profile" %>
 <%@ page import="smartcity.Work" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="org.json.JSONObject" %>
 <%--
   Created by IntelliJ IDEA.
   User: minchu
@@ -16,7 +18,6 @@
         String userEmail = (String) session.getAttribute("email");
         String userID = (String) session.getAttribute("userID");
         Profile profile = new Profile(userEmail);
-        System.out.println(userEmail);
 %>
 <html>
 <head>
@@ -48,9 +49,18 @@
 
 <div class="container">
 
-
     <div class="col-sm-4" style="text-align: center">
         <h3>Profile</h3>
+        <%
+            String urlString = "https://www.googleapis.com/plus/v1/people/"+userID+"?fields=image&key="+LoadProperties.properties.getString("GoogleMapsAPIKey");
+//            URL url = new URL(urlString);
+//            JSONObject urlResponse = (JSONObject) url.getContent();
+//            System.out.println(urlResponse.toString());
+        %>
+        <div class="col-sm-12" style="text-align: center; border-radius: 100%; margin-bottom: 2em; margin-top: 1.5em;">
+            <img class="img-circle" src="images/pp-placeholder.png" width="60%">
+        </div>
+        <h5 class="text-primary"><%=session.getAttribute("nameOfUser")%></h5>
     </div>
     <div class="col-sm-8">
 

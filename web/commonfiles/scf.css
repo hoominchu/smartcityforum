@@ -178,3 +178,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 .navbar {
     padding: 0 25px;
 }
+
+.img-circle {
+    border-radius: 50%;
+}
