@@ -197,7 +197,7 @@
             if (numberOfWorksDisplayed > 0) {
         %>
         <%
-            if (wardNumberParameter != null) {
+            if (wardNumberParameter != null && Integer.parseInt(wardNumberParameter) < 68) {
 
                 String[] wardinfo = Ward.getWardInfo(Integer.parseInt(wardNumberParameter));
                 String corporatorEnglish = wardinfo[1];
