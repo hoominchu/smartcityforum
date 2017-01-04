@@ -11,36 +11,14 @@ import java.util.List;
  */
 public class Alerts {
 
-
-    public void subscribeToField1(String email, int field1ID) { //Field1 is work and field1ID is workID
-        try {
-            DBObject whereQuery = new BasicDBObject("email", email);
-            DBObject where = Database.subscribers.findOne(whereQuery);
-            if (where != null) {
-                BasicDBObject update = new BasicDBObject();
-                update.append("$push", new BasicDBObject(LoadProperties.properties.getString("Subscribers.FieldID1"), field1ID));
-                Database.subscribers.update(whereQuery, update);
-            } else {
-                BasicDBList field1IDs = new BasicDBList();
-                field1IDs.add(field1ID);
-                BasicDBObject document = new BasicDBObject();
-                document.append("email", email);
-                document.append(LoadProperties.properties.getString("Subscribers.FieldID1"), field1IDs);
-                Database.subscribers.insert(document);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean checkIfSubscribedToField1(String email, int field1ID) {
+    public boolean checkIfSubscribedToField1(String email, int field1) {
         boolean check = false;
         try {
             DBObject whereQuery = new BasicDBObject("email", email);
             DBObject where = Database.subscribers.findOne(whereQuery);
             if (where != null) {
-                List<Integer> field1IDs = (List<Integer>) where.get(LoadProperties.properties.getString("Subscribers.FieldID1"));
-                if (field1IDs.contains(field1ID)) {
+                List<Integer> field1List = (List<Integer>) where.get(LoadProperties.properties.getString("Subscribers.Field1"));
+                if (field1List.contains(field1)) {
                     check = true;
                 }
             }
@@ -50,11 +28,32 @@ public class Alerts {
         return check;
     }
 
-    public void unsubscribeFromField1(String email, int field1ID) {
+    public void subscribeToField1(String email, int field1) { //Field1 is work and field1ID is workID
+        try {
+            DBObject whereQuery = new BasicDBObject("email", email);
+            DBObject where = Database.subscribers.findOne(whereQuery);
+            if (where != null) {
+                BasicDBObject update = new BasicDBObject();
+                update.append("$push", new BasicDBObject(LoadProperties.properties.getString("Subscribers.Field1"), field1));
+                Database.subscribers.update(whereQuery, update);
+            } else {
+                BasicDBList field1List = new BasicDBList();
+                field1List.add(field1);
+                BasicDBObject document = new BasicDBObject();
+                document.append("email", email);
+                document.append(LoadProperties.properties.getString("Subscribers.Field1"), field1List);
+                Database.subscribers.insert(document);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unsubscribeFromField1(String email, int field1) {
         try {
             DBObject whereQuery = new BasicDBObject("email", email);
             BasicDBObject update = new BasicDBObject();
-            update.append("$pull", new BasicDBObject(LoadProperties.properties.getString("Subscribers.FieldID1"), field1ID));
+            update.append("$pull", new BasicDBObject(LoadProperties.properties.getString("Subscribers.Field1"), field1));
             Database.subscribers.update(whereQuery, update);
         } catch (Exception e) {
             e.printStackTrace();

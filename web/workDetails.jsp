@@ -174,7 +174,7 @@
         <%--button to unsubscribe--%>
         <button id="unsubscribeButton" class="btn btn-default btn-block round-corner-bottom"
                 style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
-                onclick="unsubscribe()">Click here to unsubscribe! 
+                onclick="unsubscribe()">Click here to unsubscribe!
         </button>
         <%
             }
