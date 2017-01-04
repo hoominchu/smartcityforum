@@ -151,10 +151,10 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
             a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
+                m = s.getElementsByTagName(o)[0];
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
@@ -330,10 +330,12 @@
         </div>
         <div class="row" style="margin-left: 1em; margin-right: 1em;">
             <%
-                if (!subscriptionToSourceOfIncome) {
+                if (sourceOfIncomeIDParameter != null) {
+                    if (!subscriptionToSourceOfIncome) {
             %>
             <%--button to subscribe--%>
-            <button id="subscribeSourceOfIncomeButton" class="btn btn-default btn-block round-corner-bottom round-corner-top"
+            <button id="subscribeSourceOfIncomeButton"
+                    class="btn btn-default btn-block round-corner-bottom round-corner-top"
                     style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
                     onclick="subscribeToSourceOfIncome()">Click here to subscribe to this source of income!
             </button>
@@ -341,11 +343,13 @@
             } else {
             %>
             <%--button to unsubscribe--%>
-            <button id="unsubscribeSourceOfIncomeButton" class="btn btn-default btn-block round-corner-bottom round-corner-top"
+            <button id="unsubscribeSourceOfIncomeButton"
+                    class="btn btn-default btn-block round-corner-bottom round-corner-top"
                     style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
                     onclick="unsubscribeFromSourceOfIncome()">Click here to unsubscribe from this source of income!
             </button>
             <%
+                    }
                 }
             %>
         </div>
@@ -431,20 +435,20 @@
                 String dismissalLink = baseLink + dynamicLink.replace(click.parameter + "=" + click.parameterValue, "");
                 dismissalLink = dismissalLink.substring(0, dismissalLink.lastIndexOf("&"));
         %>
-    <span class="label label-primary round-corner"
-          style="font-size: 1.1em; margin-bottom: 0.2em; display: inline-block"><%=click.parameterPresentable%> : <%=click.parameterValuePresentable%> <a
-            href=<%=dismissalLink%>> <i class="fa fa-times-circle white-icon" style="color: white"
-                                        aria-hidden="true"></i></a></span>
+        <span class="label label-primary round-corner"
+              style="font-size: 1.1em; margin-bottom: 0.2em; display: inline-block"><%=click.parameterPresentable%> : <%=click.parameterValuePresentable%> <a
+                href=<%=dismissalLink%>> <i class="fa fa-times-circle white-icon" style="color: white"
+                                            aria-hidden="true"></i></a></span>
         <%
             }
         %>
 
         <%--<input type="search" class="light-table-filter form-control col-xs-12 round-corner" data-table="searchable"--%>
-               <%--placeholder="Search in displayed results..." style="margin-bottom: 1em; margin-top: 1em">--%>
+        <%--placeholder="Search in displayed results..." style="margin-bottom: 1em; margin-top: 1em">--%>
 
         <%--<button class="btn btn-default pull-right round-corner-top"--%>
-                <%--onclick="$('#myTable').tableExport({type:'csv',escape:'false'});" href="#">--%>
-            <%--Download Results--%>
+        <%--onclick="$('#myTable').tableExport({type:'csv',escape:'false'});" href="#">--%>
+        <%--Download Results--%>
         <%--</button>--%>
 
         <table class="table table-responsive sortable searchable" id="myTable"
