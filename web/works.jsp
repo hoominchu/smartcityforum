@@ -17,6 +17,11 @@
 <%
     try {
 
+        String email = (String) session.getAttribute("email");
+        Boolean subscriptionToWard = false;
+        Boolean subscriptionToSourceOfIncome = false;
+
+
         String rootFolder;
         if (request.getRequestURL().toString().contains(LoadProperties.properties.getString("WebsiteName"))) {
             rootFolder = LoadProperties.properties.getString("PathToStoreWorksDataOnWeb");
@@ -29,6 +34,19 @@
         String languageParameter = StringEscapeUtils.escapeHtml4(request.getParameter("language"));
         String showRecentParameter = StringEscapeUtils.escapeHtml4(request.getParameter("recent"));
         String wardNumberParameter = StringEscapeUtils.escapeHtml4(request.getParameter("wardNumber"));
+        String sourceOfIncomeIDParameter = StringEscapeUtils.escapeHtml4(request.getParameter("sourceOfIncomeID"));
+
+        //checking if the person is subscribed to the ward if logged in
+        if (email != null && wardNumberParameter != null) {
+            Alerts alerts = new Alerts();
+            subscriptionToWard = alerts.checkIfSubscribedToField2(email, Integer.parseInt(wardNumberParameter));
+        }
+
+        //checking if the person is subscribed to the source of income if logged in
+        if (email != null && sourceOfIncomeIDParameter != null) {
+            Alerts alerts = new Alerts();
+            subscriptionToSourceOfIncome = alerts.checkIfSubscribedToField3(email, Integer.parseInt(sourceOfIncomeIDParameter));
+        }
 
         BasicDBObject myQuery = smartcity.Filter.generateFiltersHashset(request);
 
@@ -146,6 +164,24 @@
         ga('send', 'pageview');
 
     </script>
+    <script>
+        function subscribeToWard() {
+            document.getElementById("subscribeWardButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=false&wardNumber=<%=wardNumberParameter%>"
+        }
+        function unsubscribeFromWard() {
+            document.getElementById("unsubscribeWardButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=true&wardNumber=<%=wardNumberParameter%>"
+        }
+        function subscribeToSourceOfIncome() {
+            document.getElementById("subscribeSourceOfIncomeButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=false&sourceOfIncomeID=<%=sourceOfIncomeIDParameter%>"
+        }
+        function unsubscribeFromSourceOfIncome() {
+            document.getElementById("unsubscribeSourceOfIncomeButton").disabled = true;
+            window.location = "subscribe.jsp?unsubscribe=true&sourceOfIncomeID=<%=sourceOfIncomeIDParameter%>"
+        }
+    </script>
 </head>
 
 <body>
@@ -227,6 +263,25 @@
                     </h4>
                 </div>
             </div>
+            <%
+                if (!subscriptionToWard) {
+            %>
+            <%--button to subscribe--%>
+            <button id="subscribeWardButton" class="btn btn-default btn-block round-corner-bottom"
+                    style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
+                    onclick="subscribeToWard()">Click here to subscribe to this ward!
+            </button>
+            <%
+            } else {
+            %>
+            <%--button to unsubscribe--%>
+            <button id="unsubscribeWardButton" class="btn btn-default btn-block round-corner-bottom"
+                    style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
+                    onclick="unsubscribeFromWard()">Click here to unsubscribe from this ward!
+            </button>
+            <%
+                }
+            %>
         </div>
 
         <%
@@ -272,6 +327,27 @@
                     <div id="dashboard" style="width:100%; height:23em; z-index: 100; margin-top: -10em"></div>
                 </div>
             </div>
+        </div>
+        <div class="row" style="margin-left: 1em; margin-right: 1em;">
+            <%
+                if (!subscriptionToSourceOfIncome) {
+            %>
+            <%--button to subscribe--%>
+            <button id="subscribeSourceOfIncomeButton" class="btn btn-default btn-block round-corner-bottom round-corner-top"
+                    style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
+                    onclick="subscribeToSourceOfIncome()">Click here to subscribe to this source of income!
+            </button>
+            <%
+            } else {
+            %>
+            <%--button to unsubscribe--%>
+            <button id="unsubscribeSourceOfIncomeButton" class="btn btn-default btn-block round-corner-bottom round-corner-top"
+                    style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
+                    onclick="unsubscribeFromSourceOfIncome()">Click here to unsubscribe from this source of income!
+            </button>
+            <%
+                }
+            %>
         </div>
         <%
             Ward.createAllWardObjects(works);

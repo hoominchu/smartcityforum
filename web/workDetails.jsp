@@ -166,7 +166,7 @@
         <%--button to subscribe--%>
         <button id="subscribeButton" class="btn btn-default btn-block round-corner-bottom"
                 style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
-                onclick="subscribe()">Click here to subscribe!
+                onclick="subscribe()">Click here to subscribe to this work!
         </button>
         <%
         } else {
@@ -174,7 +174,7 @@
         <%--button to unsubscribe--%>
         <button id="unsubscribeButton" class="btn btn-default btn-block round-corner-bottom"
                 style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
-                onclick="unsubscribe()">Click here to unsubscribe!
+                onclick="unsubscribe()">Click here to unsubscribe from this work!
         </button>
         <%
             }
