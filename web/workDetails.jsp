@@ -172,7 +172,7 @@
         } else {
         %>
         <%--button to unsubscribe--%>
-        <button id="unsubscribeButton" class="btn btn-info btn-block round-corner-bottom" style="font-size: 15px;"
+        <button id="unsubscribeButton" class="btn btn-danger btn-block round-corner-bottom" style="font-size: 15px;"
                 onclick="unsubscribe()" > Unsubscribe
         </button>
         <%
