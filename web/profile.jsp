@@ -52,7 +52,7 @@
     <div class="col-sm-4" style="text-align: center">
         <h3>Profile</h3>
         <%
-            String urlString = "https://www.googleapis.com/plus/v1/people/"+userID+"?fields=image&key="+LoadProperties.properties.getString("GoogleMapsAPIKey");
+//            String urlString = "https://www.googleapis.com/plus/v1/people/"+userID+"?fields=image&key="+LoadProperties.properties.getString("GoogleMapsAPIKey");
 //            URL url = new URL(urlString);
 //            JSONObject urlResponse = (JSONObject) url.getContent();
 //            System.out.println(urlResponse.toString());
@@ -60,7 +60,7 @@
         <div class="col-sm-12" style="text-align: center; border-radius: 100%; margin-bottom: 2em; margin-top: 1.5em;">
             <img class="img-circle" src="images/pp-placeholder.png" width="60%">
         </div>
-        <h5 class="text-primary"><%=session.getAttribute("nameOfUser")%></h5>
+        <h4><%=session.getAttribute("nameOfUser")%></h4>
     </div>
     <div class="col-sm-8">
 
