@@ -1,9 +1,9 @@
+<%@ page import="com.mongodb.BasicDBObject" %>
+<%@ page import="com.mongodb.DBObject" %>
+<%@ page import="smartcity.Database" %>
 <%@ page import="smartcity.Profile" %>
 <%@ page import="smartcity.Work" %>
-<%@ page import="com.mongodb.BasicDBObject" %>
-<%@ page import="com.mongodb.DBCursor" %>
-<%@ page import="smartcity.Database" %>
-<%@ page import="com.mongodb.DBObject" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: minchu
   Date: 08/06/16
@@ -49,55 +49,82 @@
 <div class="container">
 
 
-        <div class="col-sm-4" style="text-align: center">
-            <h3>Profile</h3>
-        </div>
-        <div class="col-sm-8">
-            <h4>Works you have subscribed to</h4>
-            <%
-                for (Integer workID : profile.subscribedWorks) {
-                    Work work = Work.getWork(workID.toString());
-            %>
-            <div class="panel panel-default round-corner">
-                <div class="panel-body round-corner-top">
-                    <%=work.workDescriptionEnglish%>
-                </div>
-                <div class="panel-footer round-corner-bottom">Work ID : <%=work.workID%> | Ward : <%=work.wardNumber%> | Contractor
-                    : <%=work.contractor%>
-                </div>
-            </div>
-            <%
-                }
-            %>
+    <div class="col-sm-4" style="text-align: center">
+        <h3>Profile</h3>
+    </div>
+    <div class="col-sm-8">
 
-            <h4>Wards you have subscribed to</h4>
-            <%
-                for (Integer ward : profile.subscribedWards) {
-            %>
-            <div class="panel panel-default round-corner" style="display: inline-block">
-                <div class="panel-body round-corner">
-                    <%=ward%>
-                </div>
+        <%
+            if (profile.subscribedWorks.size() > 0) {
+        %>
+        <h4>Works you have subscribed to</h4>
+        <%
+            for (Integer workID : profile.subscribedWorks) {
+                Work work = Work.getWork(workID.toString());
+        %>
+        <div class="panel panel-default round-corner">
+            <div class="panel-body round-corner-top">
+                <%=work.workDescriptionEnglish%>
             </div>
-            <%
-                }
-            %>
-
-            <h4>Sources of income you have subscribed to</h4>
-            <%
-                for (Integer sourceOfIncomeID : profile.subscribedSourcesOfIncome) {
-                    BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"),sourceOfIncomeID);
-                    DBObject object = Database.allworks.findOne(query);
-            %>
-            <div class="panel panel-default round-corner" style="display: inline-block">
-                <div class="panel-body round-corner">
-                    <%=object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"))%>
-                </div>
+            <div class="panel-footer round-corner-bottom">Work ID : <%=work.workID%> | Ward : <%=work.wardNumber%> |
+                Contractor
+                : <%=work.contractor%>
             </div>
-            <%
-                }
-            %>
         </div>
+        <%
+            }
+        } else {
+        %>
+        <hr><h4 class="text-danger">You have not subscribed to any work</h4><hr>
+        <%
+            }
+        %>
+
+        <%
+            if (profile.subscribedWards.size() > 0) {
+        %>
+        <h4>Wards you have subscribed to</h4>
+        <%
+            for (Integer ward : profile.subscribedWards) {
+        %>
+        <div class="panel panel-default round-corner" style="display: inline-block">
+            <div class="panel-body round-corner">
+                <%=ward%>
+            </div>
+        </div>
+        <%
+            }
+        } else {
+        %>
+        <hr><h4 class="text-danger">You have not subscribed to any ward</h4><hr>
+        <%
+            }
+        %>
+
+        <%
+            if (profile.subscribedSourcesOfIncome.size() > 0) {
+        %>
+
+        <h4>Sources of income you have subscribed to</h4>
+        <%
+            for (Integer sourceOfIncomeID : profile.subscribedSourcesOfIncome) {
+                BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), sourceOfIncomeID);
+                DBObject object = Database.allworks.findOne(query);
+        %>
+        <div class="panel panel-default round-corner" style="display: inline-block">
+            <div class="panel-body round-corner">
+                <%=object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"))%>
+            </div>
+        </div>
+        <%
+            }
+        } else {
+        %>
+        <hr><h4 class="text-danger">You have not subscribed to any source of income</h4><hr>
+        <%
+            }
+        %>
+    </div>
 
 
 </div>
