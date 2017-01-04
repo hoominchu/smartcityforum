@@ -164,16 +164,17 @@
             if (!subscription) {
         %>
         <%--button to subscribe--%>
-        <button id="subscribeButton" class="btn btn-info btn-block round-corner-bottom" style="font-size: 15px;"
-                onclick="subscribe()" >I am
-            interested in this work!
+        <button id="subscribeButton" class="btn btn-default btn-block round-corner-bottom"
+                style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
+                onclick="subscribe()">Click here to subscribe!
         </button>
         <%
         } else {
         %>
         <%--button to unsubscribe--%>
-        <button id="unsubscribeButton" class="btn btn-danger btn-block round-corner-bottom" style="font-size: 15px;"
-                onclick="unsubscribe()" > Unsubscribe
+        <button id="unsubscribeButton" class="btn btn-default btn-block round-corner-bottom"
+                style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
+                onclick="unsubscribe()">Click here to unsubscribe! 
         </button>
         <%
             }
