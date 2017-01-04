@@ -35,7 +35,7 @@
     <script src="commonfiles/bootstrap.min.js"></script>
     <script src="commonfiles/addons.js"></script>
     <script src="commonfiles/custom.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="commonfiles/slick/slick-theme.css"/>
 
@@ -65,6 +65,10 @@
         <div class="panel panel-default round-corner">
             <div class="panel-body round-corner-top">
                 <%=work.workDescriptionEnglish%>
+                <%
+                    String unsubscribeLink = "subscribe.jsp?unsubscribe=true&workID="+work.workID;
+                %>
+                <a href=<%=unsubscribeLink%>> <i style="font-size: 1.2em;" class="fa fa-times-circle pull-right text-danger" aria-hidden="true"></i></a>
             </div>
             <div class="panel-footer round-corner-bottom">Work ID : <%=work.workID%> | Ward : <%=work.wardNumber%> |
                 Contractor
@@ -75,7 +79,9 @@
             }
         } else {
         %>
-        <hr><h4 class="text-danger">You have not subscribed to any work</h4><hr>
+        <hr>
+        <h4 class="text-danger">You have not subscribed to any work</h4>
+        <hr>
         <%
             }
         %>
@@ -90,13 +96,20 @@
         <div class="panel panel-default round-corner" style="display: inline-block">
             <div class="panel-body round-corner">
                 <%=ward%>
+                &nbsp;
+                <%
+                    String unsubscribeLink = "subscribe.jsp?unsubscribe=true&wardNumber="+Integer.toString(ward);
+                %>
+                <a href=<%=unsubscribeLink%>> <i style="font-size: 1.2em;" class="fa fa-times-circle pull-right text-danger" aria-hidden="true"></i></a>
             </div>
         </div>
         <%
             }
         } else {
         %>
-        <hr><h4 class="text-danger">You have not subscribed to any ward</h4><hr>
+        <hr>
+        <h4 class="text-danger">You have not subscribed to any ward</h4>
+        <hr>
         <%
             }
         %>
@@ -114,13 +127,19 @@
         <div class="panel panel-default round-corner" style="display: inline-block">
             <div class="panel-body round-corner">
                 <%=object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"))%>
+                <%
+                    String unsubscribeLink = "subscribe.jsp?unsubscribe=true&sourceOfIncomeID="+Integer.toString(sourceOfIncomeID);
+                %>
+                <a href=<%=unsubscribeLink%>> <i style="font-size: 1.2em;" class="fa fa-times-circle pull-right text-danger" aria-hidden="true"></i></a>
             </div>
         </div>
         <%
             }
         } else {
         %>
-        <hr><h4 class="text-danger">You have not subscribed to any source of income</h4><hr>
+        <hr>
+        <h4 class="text-danger">You have not subscribed to any source of income</h4>
+        <hr>
         <%
             }
         %>

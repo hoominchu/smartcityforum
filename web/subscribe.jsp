@@ -22,7 +22,8 @@
             } else if (unsubscribe.equals("true")) {
                 alerts.unsubscribeFromField1(email, workID);
             }
-            response.sendRedirect("workDetails.jsp?workID=" + workIDParameter + "&jumbotron=info");
+            String redirectLink = request.getHeader("Referer");
+            response.sendRedirect(redirectLink);
         }
 
         //Ward - Subscribe/Unsubscribe
@@ -33,7 +34,8 @@
             } else if (unsubscribe.equals("true")) {
                 alerts.unsubscribeFromField2(email, wardNumber);
             }
-            response.sendRedirect("works.jsp?wardNumber=" + wardNumberParameter);
+            String redirectLink = request.getHeader("Referer");
+            response.sendRedirect(redirectLink);
         }
 
         //Source Of Income - Subscribe/Unsubscribe
@@ -44,7 +46,8 @@
             } else if (unsubscribe.equals("true")) {
                 alerts.unsubscribeFromField3(email, sourceOfIncome);
             }
-            response.sendRedirect("works.jsp?sourceOfIncomeID=" + sourceOfIncomeIDParameter);
+            String redirectLink = request.getHeader("Referer");
+            response.sendRedirect(redirectLink);
         }
 
     } catch (Exception e) {
