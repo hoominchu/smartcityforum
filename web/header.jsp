@@ -19,7 +19,7 @@
         <%
         } else {
         %>
-        <p class="pull-right">Hello, <%=session.getAttribute("nameOfUser")%>!</p>
+        <p class="pull-right">Hello, <a href="profile.jsp"> <%=session.getAttribute("nameOfUser")%></a>!</p>
         <%
             }
         %>

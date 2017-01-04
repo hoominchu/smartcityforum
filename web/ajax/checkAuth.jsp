@@ -46,9 +46,11 @@
             if (emailVerified) {
                 session.setAttribute("email", email);
                 session.setAttribute("nameOfUser", name);
+                session.setAttribute("userID", userId);
                 o.put ("status", 0);
                 o.put ("name", name);
                 o.put ("email", email);
+                o.put("userID", userId);
             }
 
           // String pictureUrl = (String) payload.get("picture");

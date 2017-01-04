@@ -68,7 +68,7 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/jetty/javax.servlet -->
-	<dependency>
+	   <dependency>
              <groupId>org.json</groupId>
              <artifactId>json</artifactId>
              <version>20131018</version>

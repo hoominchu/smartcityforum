@@ -132,6 +132,21 @@ public class Work implements Comparable<Work> {
         return works;
     }
 
+    public static Work getWork (String workID) {
+        BasicDBObject query = new BasicDBObject();
+        query.append(LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID));
+        DBCursor cursor = Database.allworks.find(query);
+
+        Work work = null;
+
+        while (cursor.hasNext()) {
+            DBObject workObject = cursor.next();
+            work = new Work(workObject);
+        }
+
+        return work;
+    }
+
     public int compareTo(Work compareWork) {
 
         int compareQuantity = Integer.parseInt(compareWork.workTypeID);
