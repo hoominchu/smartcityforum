@@ -9,16 +9,13 @@
 <%@ page import="com.mongodb.BasicDBObject,org.apache.commons.fileupload.FileItem" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
-<%@ page import="smartcity.Database" %>
-<%@ page import="smartcity.LoginChecks" %>
+<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
-<%@ page import="smartcity.General" %>
-<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
-<%@ page import="smartcity.LoadProperties" %>
+<%@ page import="smartcity.*" %>
 <%
     try {
         String workIDParameter = request.getParameter("workID");
@@ -63,6 +60,11 @@ else if (LoginChecks.isAuthorisedUser(request)) {
             document.put("Date", dateFormat.format(date));
             document.put("Time", timeFormat.format(date));
             Database.workNotes.insert(document);
+
+            DataEntryDifference dataEntryDifference = new DataEntryDifference(workIDParameter, "Work");
+            dataEntryDifference.headers.add("Work Notes");
+            dataEntryDifference.previousValues.add("null");
+            dataEntryDifference.newValues.add(notes);
         }
     } catch (Exception e) {
         System.out.println("Error message from uploadscript.jsp : " + e.getMessage());
@@ -113,6 +115,11 @@ else if (LoginChecks.isAuthorisedUser(request)) {
                         item.write(uploadedFile);
                     }
                 }
+                DataEntryDifference dataEntryDifference = new DataEntryDifference(workIDParameter,"Work");
+                dataEntryDifference.headers.add("Photos");
+                dataEntryDifference.previousValues.add("-");
+                dataEntryDifference.newValues.add(Integer.toString(items.size()));
+
                 response.sendRedirect("uploadsuccess.jsp?workID=" + workIDParameter);
             } catch (Exception e) {
                 System.out.println("Error while uploading : " + e.getMessage());

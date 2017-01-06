@@ -2,9 +2,9 @@ package smartcity;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by minchu on 05/01/17.
@@ -12,15 +12,15 @@ import java.util.List;
 public class DataEntryDifference {
     String fieldID;
     String fieldName;
-    List<String> previousValues;
-    List<String> newValues;
-    List<String> headers;
+    public List<String> previousValues;
+    public List<String> newValues;
+    public List<String> headers;
 
     private DataEntryDifference() {
 
     }
 
-    private DataEntryDifference(String fieldID, String fieldName) {
+    public DataEntryDifference(String fieldID, String fieldName) {
         this.fieldID = fieldID;
         this.fieldName = fieldName;
         this.headers = new ArrayList<>();
@@ -28,8 +28,14 @@ public class DataEntryDifference {
         this.newValues = new ArrayList<>();
     }
 
-    public static List<DataEntryDifference> compareData(String filePath) {
+    public static List<DataEntryDifference> compareAllWorks(String filePath) {
         List<DataEntryDifference> differences = new ArrayList<>();
+
+        Map<String, List<String>> wardToWorkOld = new TreeMap<>();
+        Map<String, List<String>> sourceOfIncomeToWorkOld = new TreeMap<>();
+
+        Map<String, List<String>> wardToWorkNew = new TreeMap<>();
+        Map<String, List<String>> sourceOfIncomeToWorkNew = new TreeMap<>();
 
         try {
             List<List<String>> CSVLines = CSVUtils.parseCSV(filePath);
@@ -40,28 +46,87 @@ public class DataEntryDifference {
                 List<String> currentLine = CSVLines.get(i);
                 String workID = currentLine.get(0);
                 BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID));
-                DBObject workObject = Database.allworks.findOne(query);
 
-                DataEntryDifference dataEntryDifference = new DataEntryDifference(workID, "Work");
+                //Inserting the new works
+                if (Database.allworks.count(query)<1) {
+                    BasicDBObject workObject = new BasicDBObject();
 
-                for (int j = 0; j < currentLine.size(); j++) {
-                    String header = headerLine.get(j);
-                    String newVal = currentLine.get(j);
+                    List<String> tempForWard = new ArrayList<>(1);
 
-                    String prevVal = workObject.get(header).toString();
+                    if (wardToWorkNew.containsKey(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.WardNumber"))))) {
+                        tempForWard = wardToWorkNew.get(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.WardNumber"))));
+                    }
+                    tempForWard.add(workID);
+                    wardToWorkNew.put(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.WardNumber"))),tempForWard);
 
-                    if (!newVal.equals(prevVal)) {
-                        dataEntryDifference.previousValues.add(prevVal);
-                        dataEntryDifference.newValues.add(newVal);
-                        dataEntryDifference.headers.add(header);
+                    List<String> tempForSOI = new ArrayList<>(1);
+                    if (sourceOfIncomeToWorkNew.containsKey(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"))))) {
+                        tempForSOI = sourceOfIncomeToWorkNew.get(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"))));
+                    }
+                    tempForSOI.add(workID);
+                    sourceOfIncomeToWorkNew.put(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"))),tempForSOI);
 
-                        System.out.println("Header : " + header + " | Previous value : " + prevVal + " | New value : " + newVal);
+                    for (int j = 0; j < currentLine.size(); j++) {
+
+                        try {
+                            workObject.put(headerLine.get(j),Integer.parseInt(currentLine.get(j)));
+                        } catch (NumberFormatException e) {
+                            workObject.put(headerLine.get(j), currentLine.get(j));
+                        }
                     }
 
+                    Database.allworks.insert(workObject);
                 }
+                else {
+                    DBObject workObject = Database.allworks.findOne(query);
 
-                if (dataEntryDifference.headers != null && dataEntryDifference.headers.size() > 0) {
-                    differences.add(dataEntryDifference);
+                    DataEntryDifference dataEntryDifference = new DataEntryDifference(workID, LoadProperties.properties.getString("Subscribers.Field1"));
+
+                    for (int j = 0; j < currentLine.size(); j++) {
+                        String header = headerLine.get(j);
+                        String newVal = currentLine.get(j);
+
+                        String prevVal = workObject.get(header).toString();
+                        String wardNumber = workObject.get(LoadProperties.properties.getString("Work.Column.WardNumber")).toString();
+                        String sourceOfIncomeID = workObject.get(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")).toString();
+
+                        if (!newVal.equals(prevVal)) {
+                            dataEntryDifference.previousValues.add(prevVal);
+                            dataEntryDifference.newValues.add(newVal);
+                            dataEntryDifference.headers.add(header);
+
+                            if (StringUtils.isNumeric(newVal)) {
+                                Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), header, Integer.parseInt(newVal));
+                            } else if (!StringUtils.isNumeric(newVal)) {
+                                Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), header, newVal);
+                            }
+
+                            List<String> tempForWard = new ArrayList<>();
+
+                            if (wardToWorkOld.containsKey(wardNumber)) {
+                                tempForWard = wardToWorkOld.get(wardNumber);
+                            }
+
+                            tempForWard.add(workID);
+                            wardToWorkOld.put(wardNumber, tempForWard);
+
+                            List<String> tempForSOI = new ArrayList<>();
+
+                            if (sourceOfIncomeToWorkOld.containsKey(sourceOfIncomeID)) {
+                                tempForSOI = sourceOfIncomeToWorkOld.get(sourceOfIncomeID);
+                            }
+
+                            tempForSOI.add(workID);
+                            sourceOfIncomeToWorkOld.put(wardNumber, tempForSOI);
+
+                            //System.out.println("Header : " + header + " | Previous value : " + prevVal + " | New value : " + newVal);
+                        }
+
+                    }
+
+                    if (dataEntryDifference.headers != null && dataEntryDifference.headers.size() > 0) {
+                        differences.add(dataEntryDifference);
+                    }
                 }
             }
 
@@ -69,7 +134,74 @@ public class DataEntryDifference {
             e.printStackTrace();
         }
 
+        for (Map.Entry<String, List<String>> entry: wardToWorkOld.entrySet()){
+            String wardNumber = entry.getKey();
+            List<String> worksList = entry.getValue();
+
+            //System.out.println(wardNumber + " : " + worksList);
+
+            DataEntryDifference DED = new DataEntryDifference(wardNumber,LoadProperties.properties.getString("Subscribers.Field2"));
+            DED.previousValues = worksList;
+            DED.headers.add("-");
+
+            differences.add(DED);
+        }
+
+        for (Map.Entry<String, List<String>> entry: sourceOfIncomeToWorkOld.entrySet()){
+            String sourceOfIncomeID = entry.getKey();
+            List<String> worksList = entry.getValue();
+
+            DataEntryDifference DED = new DataEntryDifference(sourceOfIncomeID,LoadProperties.properties.getString("Subscribers.Field3"));
+            DED.previousValues = worksList;
+            DED.headers.add("-");
+
+            differences.add(DED);
+        }
+
+        for (Map.Entry<String, List<String>> entry: wardToWorkNew.entrySet()){
+            String wardNumber = entry.getKey();
+            List<String> worksList = entry.getValue();
+
+            //System.out.println(wardNumber + " : " + worksList);
+
+            DataEntryDifference DED = new DataEntryDifference(wardNumber,LoadProperties.properties.getString("Subscribers.Field2"));
+
+            if (differences.contains(DED)) {
+                DED = differences.get(differences.indexOf(DED));
+            }
+
+            DED.newValues = worksList;
+            DED.headers.add("-");
+
+            differences.add(DED);
+        }
+
+        for (Map.Entry<String, List<String>> entry: sourceOfIncomeToWorkNew.entrySet()){
+            String sourceOfIncomeID = entry.getKey();
+            List<String> worksList = entry.getValue();
+
+            DataEntryDifference DED = new DataEntryDifference(sourceOfIncomeID,LoadProperties.properties.getString("Subscribers.Field3"));
+
+            if (differences.contains(DED)) {
+                DED = differences.get(differences.indexOf(DED));
+            }
+
+            DED.newValues = worksList;
+            DED.headers.add("-");
+
+            differences.add(DED);
+        }
 
         return differences;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (this.fieldID.equals(((DataEntryDifference) obj).fieldID) && this.fieldName.equals(((DataEntryDifference) obj).fieldName));
+    }
+
+    @Override
+    public int hashCode() {
+        return this.fieldID.hashCode() + this.fieldName.hashCode();
     }
 }
