@@ -187,4 +187,10 @@ public class Work implements Comparable<Work> {
         }
         return description;
     }
+
+    public static String getSourceOfIncomeNameOfID(int sourceOfIncomeID) {
+        BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), sourceOfIncomeID);
+        DBObject object = Database.allworks.findOne(query);
+        return (String) object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"));
+    }
 }
