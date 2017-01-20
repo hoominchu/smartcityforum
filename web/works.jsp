@@ -151,10 +151,10 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
             a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+                    m = s.getElementsByTagName(o)[0];
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
@@ -187,6 +187,7 @@
 <body>
 
 <%@include file="navbar.jsp" %>
+<%@include file="loginbar.jsp"%>
 <%@include file="header.jsp" %>
 
 <div class="container">
@@ -212,11 +213,11 @@
                 String imgURL = corporatorDetails[5];
         %>
 
-        <div class="panel panel-default round-corner wardifno-box" style="text-align: center; width: 100%">
-            <div class="panel-heading round-corner-top">Ward Info</div>
+        <div class="panel panel-default round-corner" style="text-align: center; width: 100%">
+            <div class="panel-heading round-corner-top">Ward Information</div>
             <div class="panel-body">
 
-                <div class="pull-left" id="corporatorImage" style=" width: 20%; display: inline-block">
+                <div class="col-sm-3" id="corporatorImage" style=" width: 20%; display: inline-block">
                     <%
                         if (imgURL.length() > 1) {
                     %>
@@ -231,7 +232,7 @@
                     %>
                 </div>
 
-                <div style="display: inline-block">
+                <div class="col-sm-9" style="display: inline-block">
                     <h4>
                         Ward Number : <%=wardNumberParameter%>
                         <%
@@ -288,11 +289,11 @@
             }
         %>
 
-        <div class="row">
-            <div class="panel panel-default round-corner overview-box"
-                 style="text-align: center;min-width: 200px; display: inline-block;">
+            <div class="panel panel-default round-corner"
+                 style="text-align: center; width: 100%; display: inline-block;">
                 <div class="panel-heading round-corner-top">Overview</div>
-                <div class="panel-body round-corner " style="height: 25em">
+                <div class="panel-body round-corner">
+                    <span class="col-sm-3 overview-element">
                     Number of Works
                     <h4>
                         <%
@@ -303,18 +304,24 @@
                             }
                         %><b><%=numberOfWorksDisplayedString%>
                     </b></h4>
-                    <hr>
+                        </span>
+                    <span class="col-sm-3 overview-element">
                     In progress <h4><b><%=General.rupeeFormat(inprogressWorks)%>
                 </b></h4>
-                    <hr>
+                    </span>
+                    <span class="col-sm-3 overview-element">
                     Completed <h4><b><%=General.rupeeFormat(completedWorks)%>
                 </b></h4>
-                    <hr>
+                        </span>
+                    <span class="col-sm-3">
                     Amount Spent <h4><b><%=amountSpentString%>
                 </b></h4>
+                        </span>
                 </div>
+                <a href="#" class="btn btn-default round-corner-bottom btn-block" data-toggle="modal" data-target=".dashboard-modal">Show Dashboard</a>
             </div>
 
+            <!--
             <div class="panel panel-default round-corner pull-right chart-box"
                  style="text-align: center;display: inline-block;">
                 <div class="panel-heading round-corner-top">Dashboard</div>
@@ -327,8 +334,32 @@
                     <div id="dashboard" style="width:100%; height:23em; z-index: 100; margin-top: -10em"></div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="margin-left: 1em; margin-right: 1em;">
+            -->
+
+            <div class="modal fade dashboard-modal round-corner">
+                <div class="modal-dialog modal-large round-corner" style="width: 80%">
+                    <div class="modal-content round-corner">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Dashboard</h4>
+                        </div>
+                        <div class="modal-body">
+                            <%--<div id="loading-chart-gif" style="height: 10em; width: 100%;">--%>
+                                <%--<small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart--%>
+                                    <%--loads...--%>
+                                <%--</small>--%>
+                            <%--</div>--%>
+                            <div id="dashboard" style="width: 100%"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default round-corner" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        <div style="margin-top: 0.5em; margin-bottom: 1em; width: 100%;">
             <%
                 if (sourceOfIncomeIDParameter != null) {
                     if (!subscriptionToSourceOfIncome) {

@@ -41,43 +41,43 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 }
 
 .round-corner {
-    border-radius: 0.6em;
+    border-radius: 10px;
 }
 
 .round-corner-left {
-    border-bottom-left-radius: 0.6em;
-    border-top-left-radius: 0.6em;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
 
 .round-corner-right {
-    border-bottom-right-radius: 0.6em;
-    border-top-right-radius: 0.6em;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .round-corner-top {
-    border-top-left-radius: 0.6em;
-    border-top-right-radius: 0.6em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .round-corner-bottom {
-    border-bottom-left-radius: 0.6em;
-    border-bottom-right-radius: 0.6em;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .round-corner-top-left {
-    border-top-left-radius: 0.6em;
+    border-top-left-radius: 10px;
 }
 
 .round-corner-top-right {
-    border-top-right-radius: 0.6em;
+    border-top-right-radius: 10px;
 }
 
 .round-corner-bottom-left {
-    border-bottom-left-radius: 0.6em;
+    border-bottom-left-radius: 10px;
 }
 
 .round-corner-bottom-right {
-    border-bottom-right-radius: 0.6em;
+    border-bottom-right-radius: 10px;
 }
 
 .white-icon {
@@ -181,4 +181,8 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 
 .img-circle {
     border-radius: 50%;
+}
+
+.modal-large {
+    width: 75%;
 }

@@ -11,7 +11,7 @@
         <%=LoadProperties.properties.getString("Footer.CopyRightNOrgnizationName")%>
     </small>
     <br>
-    <small><a href="about.jsp"> About </a> | <a href="#" data-toggle="modal" data-target=".modal"> Contact</a></small>
+    <small><a href="about.jsp"> About </a> | <a href="#" data-toggle="modal" data-target=".contact-modal"> Contact</a></small>
 </div>
 
 

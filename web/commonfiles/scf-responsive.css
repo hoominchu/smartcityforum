@@ -17,13 +17,6 @@
         width: 100%;
     }
 
-    .overview-box {
-        width: 100%;
-    }
-
-    .wardifno-box {
-        width: 100%;
-    }
 }
 
 @media screen and (min-width: 751px) {
@@ -46,8 +39,16 @@
         margin-right: 1em;
     }
 
-    .overview-box {
-        width: 23%;
-        margin-left: 2em;
+    .overview-element {
+        border-style: solid;
+        border-width: 0px 1px 0px 0px;
+        border-color: #3e3e3e
     }
+
+}
+
+a.btn{
+    white-space:normal !important;
+    word-wrap:break-word;
+    word-break: normal
 }

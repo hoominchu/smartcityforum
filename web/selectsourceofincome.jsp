@@ -37,7 +37,7 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-<%@include file="header.jsp" %>
+<%@include file="loginbar.jsp"%>
 
 <%
     List sourcesOfIncome = Database.allworks.distinct("Source of Income");
