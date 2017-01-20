@@ -58,7 +58,7 @@
                 %>
                 <a href="works.jsp?sourceOfIncomeID=<%=sourceOfIncomeIDs.get(i)%>"
                    class="btn-link btn btn-default btn-lg btn-block"
-                   style="border: 1px solid; border-color:#c1c1c1; "><%=sourcesOfIncome.get(i)%>
+                   style="border: 1px solid; border-color:#c1c1c1; height: auto; ;"><%=sourcesOfIncome.get(i)%>
                 </a>
                 <%
                     }

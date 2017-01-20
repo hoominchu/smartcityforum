@@ -117,7 +117,7 @@ public class DataEntryDifference {
                             }
 
                             tempForSOI.add(workID);
-                            sourceOfIncomeToWorkOld.put(wardNumber, tempForSOI);
+                            sourceOfIncomeToWorkOld.put(sourceOfIncomeID, tempForSOI);
 
                             //System.out.println("Header : " + header + " | Previous value : " + prevVal + " | New value : " + newVal);
                         }
