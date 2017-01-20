@@ -52,3 +52,9 @@ a.btn{
     word-wrap:break-word;
     word-break: normal
 }
+
+.btn{
+    white-space:normal !important;
+    word-wrap:break-word;
+    word-break: normal
+}
