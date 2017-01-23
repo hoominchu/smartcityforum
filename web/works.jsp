@@ -14,6 +14,7 @@
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="com.mongodb.DBObject" %>
 <%
     try {
 
@@ -36,6 +37,10 @@
         String wardNumberParameter = StringEscapeUtils.escapeHtml4(request.getParameter("wardNumber"));
         String sourceOfIncomeIDParameter = StringEscapeUtils.escapeHtml4(request.getParameter("sourceOfIncomeID"));
 
+        String searchParameter = StringEscapeUtils.escapeHtml4(request.getParameter("q"));
+
+        System.out.println(searchParameter);
+
         //checking if the person is subscribed to the ward if logged in
         if (email != null && wardNumberParameter != null) {
             Alerts alerts = new Alerts();
@@ -48,7 +53,18 @@
             subscriptionToSourceOfIncome = alerts.checkIfSubscribedToField3(email, Integer.parseInt(sourceOfIncomeIDParameter));
         }
 
-        BasicDBObject myQuery = smartcity.Filter.generateFiltersHashset(request);
+        BasicDBObject myQuery = new BasicDBObject();
+
+        if (searchParameter == null) {
+            myQuery = smartcity.Filter.generateFiltersHashset(request);
+        } else if (searchParameter != null) {
+
+            BasicDBObject searchQuery = new BasicDBObject("$search",searchParameter);
+            BasicDBObject textSearchQuery = new BasicDBObject("$text",searchQuery);
+
+            //myQuery = new BasicDBObject();
+            myQuery = textSearchQuery;
+        }
 
         String baseLink = "works.jsp?";
         String dynamicLink = General.genLink();
@@ -466,7 +482,7 @@
                 String dismissalLink = baseLink + dynamicLink.replace(click.parameter + "=" + click.parameterValue, "");
                 dismissalLink = dismissalLink.substring(0, dismissalLink.lastIndexOf("&"));
         %>
-        <span class="label label-primary round-corner"
+        <span class="label label-primary round-corner auto-height-text-overflow"
               style="font-size: 1.1em; margin-bottom: 0.2em; display: inline-block"><%=click.parameterPresentable%> : <%=click.parameterValuePresentable%> <a
                 href=<%=dismissalLink%>> <i class="fa fa-times-circle white-icon" style="color: white"
                                             aria-hidden="true"></i></a></span>

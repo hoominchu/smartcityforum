@@ -21,6 +21,8 @@ public class EveryNightScripts {
         Database.superUsers.createIndex(new BasicDBObject(LoadProperties.properties.getString("Users.Column.Email"), 1));
         Database.wardmaster.createIndex(new BasicDBObject(LoadProperties.properties.getString("Ward.Column.WardNumber"), 1));
 
+        Database.allworks.createIndex(new BasicDBObject("$**","text"));
+
         DBCursor allWorks = Database.allworks.find();
 
         while (allWorks.hasNext()) {

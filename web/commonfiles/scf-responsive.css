@@ -58,3 +58,9 @@ a.btn{
     word-wrap:break-word;
     word-break: normal
 }
+
+.auto-height-text-overflow{
+    white-space:normal !important;
+    word-wrap:break-word;
+    word-break: normal
+}
