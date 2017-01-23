@@ -80,8 +80,7 @@ public class Work implements Comparable<Work> {
                 this.statusColor = "43ac6a";
             } else if (this.statusfirstLetterCapital.equalsIgnoreCase(LoadProperties.properties.getString("StatusInprogress"))) {
                 this.statusColor = "#FFA44B";
-            }
-            else {
+            } else {
                 this.statusColor = "#FFFFFF";
             }
 
@@ -132,7 +131,7 @@ public class Work implements Comparable<Work> {
         return works;
     }
 
-    public static Work getWork (String workID) {
+    public static Work getWork(String workID) {
         BasicDBObject query = new BasicDBObject();
         query.append(LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID));
         DBCursor cursor = Database.allworks.find(query);
@@ -155,11 +154,11 @@ public class Work implements Comparable<Work> {
         return Integer.parseInt(this.workTypeID) - compareQuantity;
     }
 
-    public static ArrayList<Work> getRecentWorks () {
+    public static ArrayList<Work> getRecentWorks() {
         BasicDBObject query = new BasicDBObject();
         List<Work> works = Work.createWorkObjects(query);
 
-        List<Work> recentWorksList = works.subList(0,500);
+        List<Work> recentWorksList = works.subList(0, 500);
 
         ArrayList<Work> recentWorks = new ArrayList<>(recentWorksList);
 
@@ -177,5 +176,21 @@ public class Work implements Comparable<Work> {
             }
         }
         return false;
+    }
+
+    public static String getWorkDescriptionOfWork(int workID) {
+        DBObject whereQuery = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"), workID);
+        DBObject where = Database.allworks.findOne(whereQuery);
+        String description = "";
+        if (where != null) {
+            description = (String) where.get(LoadProperties.properties.getString("Work.Column.WorkDescriptionEnglish"));
+        }
+        return description;
+    }
+
+    public static String getSourceOfIncomeNameOfID(int sourceOfIncomeID) {
+        BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), sourceOfIncomeID);
+        DBObject object = Database.allworks.findOne(query);
+        return (String) object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"));
     }
 }
