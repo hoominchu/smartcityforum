@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="commonfiles/bootstrap.css">
     <script src="commonfiles/jquery.min.js"></script>
     <script src="commonfiles/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="commonfiles/scf-responsive.css">
+    <link rel="stylesheet" href="commonfiles/scf.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 </head>
 <body>

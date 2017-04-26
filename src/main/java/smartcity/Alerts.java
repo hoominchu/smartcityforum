@@ -182,7 +182,7 @@ public class Alerts {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("email", "password"); //insert email ID and password for authentication
+                        return new PasswordAuthentication("scf.test.tcpd@gmail.com", "testing12345678"); //insert email ID and password for authentication
                     }
                 });
 
@@ -191,7 +191,7 @@ public class Alerts {
             for (Email email : emailList) {
 
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("from-email@gmail.com")); //insert from email address 
+                message.setFrom(new InternetAddress("scf.test.tcpd@gmail.com")); //insert from email address
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(email.id));
                 message.setSubject("Updates: Hubli-Dharwad Smart City Forum");

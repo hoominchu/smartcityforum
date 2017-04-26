@@ -3,7 +3,10 @@ package smartcity;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -29,6 +32,15 @@ public class DataEntryDifference {
     }
 
     public static List<DataEntryDifference> compareAllWorks(String filePath) {
+
+        //Updating last updated in the database
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        Date date = new Date();
+        BasicDBObject currentDate = new BasicDBObject();
+        currentDate.put("Date object","true");
+        currentDate.put("Last updated date",dateFormat.format(date));
+        Database.allworks.insert(currentDate);
+
         List<DataEntryDifference> differences = new ArrayList<>();
 
         Map<String, List<String>> wardToWorkOld = new TreeMap<>();
@@ -45,10 +57,14 @@ public class DataEntryDifference {
             for (int i = 1; i < CSVLines.size(); i++) {
                 List<String> currentLine = CSVLines.get(i);
                 String workID = currentLine.get(0);
+//                System.out.println("%");
+//                System.out.println(currentLine);
+//                System.out.println("%");
                 BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID));
 
                 //Inserting the new works
                 if (Database.allworks.count(query)<1) {
+                    //System.out.println(currentLine);
                     BasicDBObject workObject = new BasicDBObject();
 
                     List<String> tempForWard = new ArrayList<>(1);
@@ -60,6 +76,12 @@ public class DataEntryDifference {
                     wardToWorkNew.put(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.WardNumber"))),tempForWard);
 
                     List<String> tempForSOI = new ArrayList<>(1);
+//                    System.out.println("*");
+//                    System.out.println(headerLine);
+//                    System.out.println(currentLine);
+//                    System.out.println(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")));
+//                    System.out.println(currentLine.size());
+//                    System.out.println("*");
                     if (sourceOfIncomeToWorkNew.containsKey(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"))))) {
                         tempForSOI = sourceOfIncomeToWorkNew.get(currentLine.get(headerLine.indexOf(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"))));
                     }
@@ -203,5 +225,14 @@ public class DataEntryDifference {
     @Override
     public int hashCode() {
         return this.fieldID.hashCode() + this.fieldName.hashCode();
+    }
+
+    public static void insertUpdateDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        Date date = new Date();
+        BasicDBObject currentDate = new BasicDBObject();
+        currentDate.put("Date object","true");
+        currentDate.put("Last updated date",dateFormat.format(date));
+        Database.allworks.insert(currentDate);
     }
 }

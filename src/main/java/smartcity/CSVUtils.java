@@ -21,7 +21,13 @@ public class CSVUtils {
         Scanner scanner = new Scanner(new File(csvFile));
         while (scanner.hasNext()) {
             List<String> line = parseLine(scanner.nextLine());
-            allLines.add(line);
+            //System.out.println(line);
+            if (line.size() == 22) {
+                allLines.add(line);
+            }
+            else {
+                //System.out.println(line);
+            }
         }
         scanner.close();
 

@@ -14,7 +14,7 @@
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="com.mongodb.DBObject" %>
+<%@ page import="org.apache.http.ParseException" %>
 <%
     try {
 
@@ -59,11 +59,16 @@
             myQuery = smartcity.Filter.generateFiltersHashset(request);
         } else if (searchParameter != null) {
 
-            BasicDBObject searchQuery = new BasicDBObject("$search",searchParameter);
-            BasicDBObject textSearchQuery = new BasicDBObject("$text",searchQuery);
+            try {
+                myQuery = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(searchParameter));
+            } catch (NumberFormatException pe) {
 
-            //myQuery = new BasicDBObject();
-            myQuery = textSearchQuery;
+                BasicDBObject searchQuery = new BasicDBObject("$search", searchParameter);
+                BasicDBObject textSearchQuery = new BasicDBObject("$text", searchQuery);
+
+                //myQuery = new BasicDBObject();
+                myQuery = textSearchQuery;
+            }
         }
 
         String baseLink = "works.jsp?";
@@ -203,7 +208,7 @@
 <body>
 
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp"%>
+<%@include file="loginbar.jsp" %>
 <%@include file="header.jsp" %>
 
 <div class="container">
@@ -305,10 +310,10 @@
             }
         %>
 
-            <div class="panel panel-default round-corner"
-                 style="text-align: center; width: 100%; display: inline-block;">
-                <div class="panel-heading round-corner-top">Overview</div>
-                <div class="panel-body round-corner">
+        <div class="panel panel-default round-corner"
+             style="text-align: center; width: 100%; display: inline-block;">
+            <div class="panel-heading round-corner-top">Overview</div>
+            <div class="panel-body round-corner">
                     <span class="col-sm-3 overview-element">
                     Number of Works
                     <h4>
@@ -333,46 +338,47 @@
                     Amount Spent <h4><b><%=amountSpentString%>
                 </b></h4>
                         </span>
-                </div>
-                <a href="#" class="btn btn-default round-corner-bottom btn-block" data-toggle="modal" data-target=".dashboard-modal">Show Dashboard</a>
             </div>
+            <a href="#" class="btn btn-default round-corner-bottom btn-block" data-toggle="modal"
+               data-target=".dashboard-modal">Show Dashboard</a>
+        </div>
 
-            <!--
-            <div class="panel panel-default round-corner pull-right chart-box"
-                 style="text-align: center;display: inline-block;">
-                <div class="panel-heading round-corner-top">Dashboard</div>
-                <div class="panel-body round-corner">
-                    <div id="loading-chart-gif" style="height: 10em; width: 100%;">
-                        <small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart
-                            loads...
-                        </small>
-                    </div>
-                    <div id="dashboard" style="width:100%; height:23em; z-index: 100; margin-top: -10em"></div>
+        <!--
+        <div class="panel panel-default round-corner pull-right chart-box"
+             style="text-align: center;display: inline-block;">
+            <div class="panel-heading round-corner-top">Dashboard</div>
+            <div class="panel-body round-corner">
+                <div id="loading-chart-gif" style="height: 10em; width: 100%;">
+                    <small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart
+                        loads...
+                    </small>
                 </div>
+                <div id="dashboard" style="width:100%; height:23em; z-index: 100; margin-top: -10em"></div>
             </div>
-            -->
+        </div>
+        -->
 
-            <div class="modal fade dashboard-modal round-corner">
-                <div class="modal-dialog modal-large round-corner" style="width: 80%">
-                    <div class="modal-content round-corner">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Dashboard</h4>
-                        </div>
-                        <div class="modal-body">
-                            <%--<div id="loading-chart-gif" style="height: 10em; width: 100%;">--%>
-                                <%--<small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart--%>
-                                    <%--loads...--%>
-                                <%--</small>--%>
-                            <%--</div>--%>
-                            <div id="dashboard" style="width: 100%"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default round-corner" data-dismiss="modal">Close</button>
-                        </div>
+        <div class="modal fade dashboard-modal round-corner">
+            <div class="modal-dialog modal-large round-corner" style="width: 80%">
+                <div class="modal-content round-corner">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Dashboard</h4>
+                    </div>
+                    <div class="modal-body">
+                        <%--<div id="loading-chart-gif" style="height: 10em; width: 100%;">--%>
+                        <%--<small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart--%>
+                        <%--loads...--%>
+                        <%--</small>--%>
+                        <%--</div>--%>
+                        <div id="dashboard" style="width: 100%"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default round-corner" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
 
 
         <div style="margin-top: 0.5em; margin-bottom: 1em; width: 100%;">
@@ -572,18 +578,19 @@
                         <%=workDescriptionFinal%>
                     </a>
                     <br>
-                    <% if (work.doWorkDetailsExist) { %>
-                    <i class="fa fa-list-ul"
-                       style="font-size: 12pt; margin-top: 2px"
-                       aria-hidden="true" title="This work has more details"></i>
-                    <% }
-                        if (billPaid > 0) {
-                    %>
-                    <i class="fa fa-money"
-                       style="font-size: 12pt; margin-top: 2px; margin-left: 5px"
-                       aria-hidden="true" title="This work has details of bills paid"></i>
+                    <%--<% if (work.doWorkDetailsExist) { %>--%>
+                    <%--<i class="fa fa-list-ul"--%>
+                    <%--style="font-size: 12pt; margin-top: 2px"--%>
+                    <%--aria-hidden="true" title="This work has more details"></i>--%>
+                    <%--<% }--%>
+                    <%--if (billPaid > 0) {--%>
+                    <%--%>--%>
+                    <%--<i class="fa fa-money"--%>
+                    <%--style="font-size: 12pt; margin-top: 2px; margin-left: 5px"--%>
+                    <%--aria-hidden="true" title="This work has details of bills paid"></i>--%>
+                    <%--<%--%>
+                    <%--}--%>
                     <%
-                        }
                         if (Work.doesFileExist(rootFolder + workID + File.separator, ".jpg") || Work.doesFileExist(rootFolder + workID + File.separator, ".png")) {
                     %>
                     <i class="fa fa-picture-o"
