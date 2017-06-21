@@ -6,13 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-         import="com.mongodb.BasicDBObject"
+         import="org.apache.commons.lang3.StringEscapeUtils"
 %>
 <%@ page import="smartcity.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
 <%
     try {
 
@@ -34,7 +33,7 @@
 
         if (yearParameterWardsChart == null) {
             queryWardsChart.put(LoadProperties.properties.getString("Work.Column.Year"), new BasicDBObject("$in", new int[]{2014, 2015, 2016}));
-            for (int i = 2014; i < 2017; i++) {
+            for (int i = 2014; i < 2018; i++) {
                 yearCheckedWardsChart.put(i, "checked");
             }
         }
@@ -44,7 +43,7 @@
             for (int i = 0; i < yearParameterWardsChart.length; i++) {
                 years[i] = Integer.parseInt(yearParameterWardsChart[i]);
 
-                for (int j = 2014; j < 2017; j++) {
+                for (int j = 2014; j < 2018; j++) {
                     if (years[i] == j) {
                         yearCheckedWardsChart.put(j, "checked");
                     }
@@ -55,8 +54,8 @@
 
         //Minor types chart
         if (yearParameterMinorTypeChart == null) {
-            queryMinorTypeChart.append(LoadProperties.properties.getString("Work.Column.Year"), new BasicDBObject("$in", new int[]{2014, 2015, 2016}));
-            for (int i = 2014; i < 2017; i++) {
+            queryMinorTypeChart.append(LoadProperties.properties.getString("Work.Column.Year"), new BasicDBObject("$in", new int[]{2015, 2016, 2017}));
+            for (int i = 2014; i < 2018; i++) {
                 yearCheckedMinorTypeChart.put(i, "checked");
             }
         }
@@ -66,7 +65,7 @@
             for (int i = 0; i < yearParameterMinorTypeChart.length; i++) {
                 years[i] = Integer.parseInt(yearParameterMinorTypeChart[i]);
 
-                for (int j = 2014; j < 2017; j++) {
+                for (int j = 2014; j < 2018; j++) {
                     if (years[i] == j) {
                         yearCheckedMinorTypeChart.put(j, "checked");
                     }
@@ -96,7 +95,8 @@
 
 <html>
 <head>
-    <title><%=LoadProperties.properties.getString("Allpages.PageTitle")%></title>
+    <title><%=LoadProperties.properties.getString("Allpages.PageTitle")%>
+    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
@@ -149,7 +149,7 @@
 <body>
 
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp"%>
+<%@include file="loginbar.jsp" %>
 <%@include file="header.jsp" %>
 
 <div class="container">
@@ -181,10 +181,6 @@
             %>
             <form method="post" action="">
                 <div class="checkbox">
-                    <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
-                        <input type="checkbox" name="yearWards" value="2014"
-                               onchange="this.form.submit()" <%=yearCheckedWardsChart.get(2014)%>> 2014
-                    </label>
 
                     <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
                         <input type="checkbox" name="yearWards" value="2015"
@@ -194,6 +190,11 @@
                     <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
                         <input type="checkbox" name="yearWards" value="2016"
                                onchange="this.form.submit()" <%=yearCheckedWardsChart.get(2016)%>> 2016
+                    </label>
+
+                    <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
+                        <input type="checkbox" name="yearWards" value="2017"
+                               onchange="this.form.submit()" <%=yearCheckedWardsChart.get(2017)%>> 2017
                     </label>
                 </div>
             </form>
@@ -221,10 +222,6 @@
             <div id="minorWorkTypeChart" style="width: 100%; height: 40em"></div>
             <form method="post" action="">
                 <div class="checkbox">
-                    <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
-                        <input type="checkbox" name="yearMinorType" value="2014"
-                               onchange="this.form.submit()" <%=yearCheckedMinorTypeChart.get(2014)%>> 2014
-                    </label>
 
                     <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
                         <input type="checkbox" name="yearMinorType" value="2015"
@@ -235,6 +232,11 @@
                         <input type="checkbox" name="yearMinorType" value="2016"
                                onchange="this.form.submit()" <%=yearCheckedMinorTypeChart.get(2016)%>> 2016
                     </label>
+
+                    <label class="margin-left big-checkbox" style="margin-left: 22%; font-size: 10pt">
+                        <input type="checkbox" name="yearMinorType" value="2017"
+                               onchange="this.form.submit()" <%=yearCheckedMinorTypeChart.get(2017)%>> 2017
+                    </label>
                 </div>
             </form>
         </div>
@@ -244,7 +246,7 @@
     <h3>13th Finance Summary</h3>
     <div class="row" style="height: 20em">
         <%
-            for (int year = 2013; year < 2017; year++) {
+            for (int year = 2014; year < 2018; year++) {
         %>
         <div class="col-sm-3">
             <div id="13thfinance<%=year%>" class="piechart"></div>
@@ -257,7 +259,7 @@
     <h3>14th Finance Summary</h3>
     <div class="row" style="height: 20em">
         <%
-            for (int year = 2016; year < 2017; year++) {
+            for (int year = 2016; year < 2018; year++) {
         %>
         <div class="col-sm-3">
             <div id="14thfinance<%=year%>" class="piechart"></div>
@@ -319,7 +321,7 @@
                 }
             },
             title: {
-                text: '<%=smartcity.Filter.getFiltersApplied()%>'
+                text: ''
             },
             credits: {
                 enabled: true
@@ -456,7 +458,7 @@
 
 <script>
     <%
-    for (int year = 2013; year < 2017; year++) {
+    for (int year = 2013; year < 2018; year++) {
     BasicDBObject finance13 = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), 43);
     finance13.append(LoadProperties.properties.getString("Work.Column.Year"),year);
     String[] finance13Details = Dashboard.workStatusPieChart(finance13);
@@ -510,7 +512,7 @@
 
 <script>
     <%
-    for (int year = 2016; year < 2017; year++) {
+    for (int year = 2016; year < 2018; year++) {
     BasicDBObject finance14 = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), 51);
     finance14.append(LoadProperties.properties.getString("Work.Column.Year"),year);
     String[] finance14Details = Dashboard.workStatusPieChart(finance14);
