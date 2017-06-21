@@ -10,11 +10,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute("email") == null){
-        %>
-    <script>
-        window.location = 'login.jsp'
-    </script>
+    if (session.getAttribute("email") == null) {
+%>
+<script>
+    window.location = 'login.jsp'
+</script>
 <%
     }
     try {
@@ -86,9 +86,14 @@
                                                  class="fa fa-times-circle pull-right text-danger"
                                                  aria-hidden="true"></i></a>
             </div>
-            <div class="panel-footer round-corner-bottom">Work ID : <%=work.workID%> | Ward : <%=work.wardNumber%> |
+            <div class="panel-footer round-corner-bottom">Work ID : <a
+                    href="workDetails.jsp?workID=<%=work.workID%>"><%=work.workID%>
+            </a> | Ward
+                : <a href="works.jsp?wardNumber=<%=work.wardNumber%>"><%=work.wardNumber%>
+                </a> |
                 Contractor
-                : <%=work.contractor%>
+                : <a href="works.jsp?contractorID=<%=work.contractorID%>"><%=work.contractor%>
+                </a>
             </div>
         </div>
         <%
@@ -96,7 +101,7 @@
         } else {
         %>
         <hr>
-        <h4 class="text-danger">You have not subscribed to any work</h4>
+        <h4 class=" text-danger">You have not subscribed to any work</h4>
         <hr>
         <%
             }
@@ -126,8 +131,11 @@
         %>
 
         <div class="panel panel-default round-corner wardifno-box" style="text-align: center; width: 100%">
-            <div class="panel-heading round-corner-top">Ward Number : <%=ward%> <a href=<%=unsubscribeLink%>> <i
-                    style="font-size: 1.2em;" class="fa fa-times-circle pull-right text-danger" aria-hidden="true"></i></a>
+            <div class="panel-heading round-corner-top">Ward Number : <a
+                    href="works.jsp?wardNumber=<%=ward%>"><%=ward%>
+            </a> <a href=<%=unsubscribeLink%>> <i
+                    style="font-size: 1.2em;" class="fa fa-times-circle pull-right text-danger"
+                    aria-hidden="true"></i></a>
             </div>
             <div class="panel-body">
                 <div class="col-sm-2">
@@ -147,26 +155,26 @@
 
                 <div class="col-xs-10">
 
-                        <%
-                            if (ward > 67) {
-                        %>| Ward meaning : <%=wardMeaning%>
-                        <%
-                        } else {
-                        %>
+                    <%
+                        if (ward > 67) {
+                    %>| Ward meaning : <%=wardMeaning%>
+                    <%
+                    } else {
+                    %>
 
-                        Corporator : <%=corporatorKannada%> | <%=corporatorEnglish%> <b> | </b> Party
-                        : <%=partyKannada%>
-                        | <%=partyEnglish%> <br><br>
-                        <%
-                            String[] phoneNumbers = contactNumber.split(",");
-                            for (String number : phoneNumbers) {
-                        %>
-                        <a href="tel:<%=number%>"><i class="fa fa-phone" aria-hidden="true"></i> <%=number%>
-                        </a> &nbsp;&nbsp;
-                        <%
-                                }
+                    Corporator : <%=corporatorKannada%> | <%=corporatorEnglish%> <b> | </b> Party
+                    : <%=partyKannada%>
+                    | <%=partyEnglish%> <br><br>
+                    <%
+                        String[] phoneNumbers = contactNumber.split(",");
+                        for (String number : phoneNumbers) {
+                    %>
+                    <a href="tel:<%=number%>"><i class="fa fa-phone" aria-hidden="true"></i> <%=number%>
+                    </a> &nbsp;&nbsp;
+                    <%
                             }
-                        %>
+                        }
+                    %>
 
                 </div>
             </div>
@@ -195,7 +203,8 @@
         %>
         <div class="panel panel-default round-corner" style="display: inline-block">
             <div class="panel-body round-corner">
-                <%=object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"))%>
+                <a href="works.jsp?sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"))%>
+                </a>
                 <%
                     String unsubscribeLink = "subscribe.jsp?unsubscribe=true&sourceOfIncomeID=" + Integer.toString(sourceOfIncomeID);
                 %>
