@@ -35,7 +35,7 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp"%>
+
 
 <div class="container">
     <div class="row">

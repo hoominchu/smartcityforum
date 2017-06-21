@@ -25,7 +25,7 @@
 <body>
 
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp"%>
+
 <%@include file="header.jsp" %>
 
 <div class="container">

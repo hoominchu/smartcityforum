@@ -10,6 +10,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    if (session.getAttribute("email") == null){
+        %>
+    <script>
+        window.location = 'login.jsp'
+    </script>
+<%
+    }
     try {
         String userEmail = (String) session.getAttribute("email");
         String userID = (String) session.getAttribute("userID");
@@ -41,7 +48,6 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp"%>
 <%@include file="header.jsp" %>
 
 <div class="container">
