@@ -1,5 +1,7 @@
 <%@ page import="smartcity.Database" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Collections" %>
 <%--
   Created by IntelliJ IDEA.
   User: minchu
@@ -41,16 +43,28 @@
 
 <%
     List years = Database.allworks.distinct("Year");
+    List<Integer> yearsInNumbers = new ArrayList<>();
+    for (Object year : years) {
+        int yearInNum = Integer.parseInt(year.toString());
+        yearsInNumbers.add(yearInNum);
+    }
+    Collections.sort(yearsInNumbers);
+    Collections.reverse(yearsInNumbers);
+    years.clear();
+    for (int year : yearsInNumbers) {
+        years.add(Integer.toString(year));
+    }
 %>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-3"></div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" style="padding-bottom: 6em;">
             <h3 style="padding-bottom:1em">Select year</h3>
             <div class="btn-group-vertical round-corner" style="width:100%; min-height: 19em">
                 <a href="works.jsp?year=<%=years.get(0)%>" class="btn-link btn btn-default btn-lg btn-block"
-                   style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;"><%=years.get(0)%></a>
+                   style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;"><%=years.get(0)%>
+                </a>
                 <%
                     for (int i = 1; i < years.size() - 1; i++) {
 
@@ -62,8 +76,10 @@
                 <%
                     }
                 %>
-                <a href="works.jsp?year=<%=years.get(years.size()-1)%>" class="btn-link btn btn-default btn-lg btn-block round-corner-bottom"
-                   style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;"><%=years.get(years.size()-1)%></a>
+                <a href="works.jsp?year=<%=years.get(years.size()-1)%>"
+                   class="btn-link btn btn-default btn-lg btn-block round-corner-bottom"
+                   style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;"><%=years.get(years.size() - 1)%>
+                </a>
             </div>
         </div>
         <div class="col-sm-3"></div>
