@@ -167,10 +167,15 @@ public class Contractor {
         return top50ContractorCompletedWorks;
     }
 
+    public static List<String> getAllContractorNames () {
+        List<String> names = (List<String>) Database.allworks.distinct("Contractor");
+        return names;
+    }
+
     /**
      * Custom method to compare two contractors based on their contract amount.
      */
-    final public static Comparator<Contractor> compareContractorByAmount = new Comparator<Contractor>() {
+    final private static Comparator<Contractor> compareContractorByAmount = new Comparator<Contractor>() {
         @Override
         public int compare(Contractor o1, Contractor o2) {
 

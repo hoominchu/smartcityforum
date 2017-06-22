@@ -6,12 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-         import="com.mongodb.BasicDBObject"
          import="com.mongodb.DBCursor"
-         import="com.mongodb.DBObject"
+         import="org.apache.commons.lang3.StringEscapeUtils"
+         import="smartcity.*"
 %>
-<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
-<%@ page import="smartcity.*" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -498,13 +496,7 @@
     <hr>
     <h4><b>Official photos
         <%
-            if (session.getAttribute("email") == null) {
-        %>
-        <span class="pull-right">Official <a
-                href="upload.jsp?workID=<%=workIDParameter%>" onclick="">login <i class="fa fa-sign-in"
-                                                                                  aria-hidden="true"></i></a></span>
-        <%
-        } else {
+            if (session.getAttribute("email") != null) {
         %>
         <span class="pull-right"><small> Hello, <%=session.getAttribute("nameOfUser")%>!</small></span><br><span
                 class="pull-right"><a href="upload.jsp?workID=<%=workIDParameter%>" onclick="">Submit info</a></span>

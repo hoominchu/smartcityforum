@@ -1,4 +1,5 @@
-<%--
+<%@ page import="smartcity.LoginChecks" %>
+<%@ page import="smartcity.Profile" %><%--
   Created by IntelliJ IDEA.
   User: minchu
   Date: 02/07/16
@@ -37,10 +38,10 @@
                 </li>
                 <%
                     if (session.getAttribute("email") == null) {
-                        %>
+                %>
                 <li><a href="login.jsp">Login</a></li>
                 <%
-                    } else {
+                } else {
                 %>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
@@ -48,6 +49,14 @@
                     <ul class="dropdown-menu round-corner-bottom" role="menu">
                         <li><a href="profile.jsp"><%=session.getAttribute("nameOfUser")%>
                         </a></li>
+                        <%
+                            if (LoginChecks.isSuperUser(request)) {
+                        %>
+                        <li class="divider"></li>
+                        <li><a href="console.jsp" class="round-corner-bottom">Console</a></li>
+                        <%
+                            }
+                        %>
                         <li class="divider"></li>
                         <li><a href="logout.jsp" class="round-corner-bottom">Logout</a></li>
                     </ul>
