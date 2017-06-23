@@ -1,0 +1,43 @@
+#!/bin/bash
+
+echo -n "Enter the path: "
+read path
+
+fileSep="/"
+path="$path$fileSep"
+
+allworks="allworks.csv"
+workdetails="workdetails.csv"
+wardmaster="wardmaster.csv"
+billspaid="billspaid.csv"
+minorcodedetails="minorcodedetails.csv"
+corporators="corporators.csv"
+authorizedemails="authorizedemails.csv"
+superusers="superusers.csv"
+
+allworkspath="$path$allworks"
+workdetailspath="$path$workdetails"
+wardmasterpath="$path$wardmaster"
+billspaidpath="$path$billspaid"
+minorcodedetailspath="$path$minorcodedetails"
+corporatorspath="$path$corporators"
+authorizedemailspath="$path$authorizedemails"
+superuserspath="$path$superusers"
+
+
+mongoimport -d smartcitydb -c "allworks" --type csv --file $allworkspath --headerline
+mongoimport -d smartcitydb -c "workdetails" --type csv --file $workdetailspath --headerline
+mongoimport -d smartcitydb -c "wardmaster" --type csv --file $wardmasterpath --headerline
+mongoimport -d smartcitydb -c "billspaid" --type csv --file $billspaidpath --headerline
+mongoimport -d smartcitydb -c "minorCodeDetails" --type csv --file $minorcodedetailspath --headerline
+mongoimport -d smartcitydb -c "corporators" --type csv --file $corporatorspath --headerline
+mongoimport -d smartcitydb -c "authorizedEmails" --type csv --file $authorizedemailspath --headerline
+mongoimport -d smartcitydb -c "superusers" --type csv --file $superuserspath --headerline
+
+
+
+
+
+
+
+
