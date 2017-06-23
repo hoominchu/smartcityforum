@@ -5,6 +5,7 @@ Instructions to set up Smart City Forum
 2.	Install MongoDB and Tomcat, if you haven’t already and start both the services.
 
 3. 	Rename the data (csv) files with the following names accordingly:
+
 		allworks.csv
 		workdetails.csv
 		wardmaster.csv
@@ -13,6 +14,7 @@ Instructions to set up Smart City Forum
 		corporators.csv
 		authorizedemails.csv
 		superusers.csv
+		
 	Put all the csv files in one folder.
 
 4. 	Run the shell script and provide with the directory of the folder containing all csv files when prompted.
