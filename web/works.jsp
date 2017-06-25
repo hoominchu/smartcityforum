@@ -6,15 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-         import="com.mongodb.BasicDBObject"
+         import="org.apache.commons.lang3.StringEscapeUtils"
 %>
-<%@ page import="org.apache.commons.lang3.StringEscapeUtils" %>
 <%@ page import="smartcity.*" %>
 <%@ page import="smartcity.Filter" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="org.apache.http.ParseException" %>
 <%
     try {
 
@@ -60,7 +58,7 @@
         } else if (searchParameter != null) {
 
             try {
-                myQuery = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(searchParameter));
+                myQuery = new BasicDBObject(LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(searchParameter));
             } catch (NumberFormatException pe) {
 
                 BasicDBObject searchQuery = new BasicDBObject("$search", searchParameter);
@@ -208,7 +206,6 @@
 <body>
 
 <%@include file="navbar.jsp" %>
-<%@include file="loginbar.jsp" %>
 <%@include file="header.jsp" %>
 
 <div class="container">
