@@ -72,7 +72,10 @@ public class Work implements Comparable<Work> {
             this.sourceOfIncomeID = (workObject.get(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")).toString() : "null";
             this.tenderApprovalDate = (workObject.get(LoadProperties.properties.getString("Work.Column.TenderApprovalDate")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.TenderApprovalDate")).toString() : "null";
             this.minorWorkTypeID = (workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeID")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeID")).toString() : "null";
-            this.minorIDMeaning = (workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")).toString() : "null";
+
+            //Minor ID meaning is not available in the same allworks collection. Hence Querying it from a different collection.
+            //this.minorIDMeaning = (workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")).toString() : "null";
+            this.minorIDMeaning = getMinorIDMeaning(Integer.parseInt(this.minorWorkTypeID));
 
             this.doWorkDetailsExist = (workObject.get(LoadProperties.properties.getString("Work.Column.AreWorkDetails")) != null) && workObject.get(LoadProperties.properties.getString("Work.Column.AreWorkDetails")).toString().equalsIgnoreCase("TRUE");
 
@@ -192,5 +195,10 @@ public class Work implements Comparable<Work> {
         BasicDBObject query = new BasicDBObject(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID"), sourceOfIncomeID);
         DBObject object = Database.allworks.findOne(query);
         return (String) object.get(LoadProperties.properties.getString("Work.Column.SourceOfFinance"));
+    }
+
+    private static String getMinorIDMeaning(int minorID) {
+        BasicDBObject query = new BasicDBObject("Code",minorID);
+        return Database.minorWorkTypes.findOne(query).get("Meaning").toString();
     }
 }

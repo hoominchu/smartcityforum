@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * Created by minchu on 15/04/16.
@@ -170,10 +171,10 @@ public class General {
 
     public static String customSortKeySortTableJS(String dateString) {
 
-        dateString = dateString.substring(0, 6) + "20" + dateString.substring(6);
+        dateString = dateString.substring(0, 7) + "20" + dateString.substring(7);
 
-        DateFormat originalFormat = new SimpleDateFormat("mm/dd/yyyy");
-        DateFormat targetFormat = new SimpleDateFormat("yyyyMMdd");
+        DateFormat originalFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        DateFormat targetFormat = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String retString = "";
 
         try {

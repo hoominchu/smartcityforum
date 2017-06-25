@@ -541,7 +541,7 @@
                         int amountSanctioned = work.amountSanctioned;
                         Integer billPaid = work.billPaid;
 
-                        int difference = amountSanctioned - billPaid;
+                        //int difference = amountSanctioned - billPaid;
 
                         String year = work.year;
 
