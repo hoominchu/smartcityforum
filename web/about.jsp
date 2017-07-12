@@ -42,7 +42,7 @@
     <div class="row">
         <div class="col-xs-8">
             <div id="about-project">
-                <p>The Smart City Forum project helps local governments be transparent and get feedback from citizens about their public works. It is based on the principle of open data and citizen participation in local government. As a demonstration, it is being deployed with the data provided by the Hubballi-Dharwad Municipal Corporation (HDMC) in the state of Karnataka in India at <a href="http://hack4hd.org/smartcity">hack4hd.org</a>.</p>
+                <p>The Smart City Forum project helps local governments be transparent and get feedback from citizens about their public works. It is based on the principle of open data and citizen participation in local government. As a demonstration, it is being deployed with the data provided by the Hubballi-Dharwad Municipal Corporation (HDMC) in the state of Karnataka in India at <a href="http://hdworks.org/smartcity">hdworks.org</a>.</p>
 
                 <p>This project has two main uses. The first use is for city administrators and local political leaders to track their own works and spending, leading to more clarity in decision-making. For example, city managers can look at the dashboard of ongoing works, get information about ward wise expenditure, funding patterns, visualize various parameters on a map, etc. They can also monitor the works by checking both official and citizen-submitted images and comments.</p>
 
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="col-xs-4">
-            <img src="images/scf_color.png" width="80%" style="margin-top: 30%">
+            <img src="images/mycity-logo-grey-bg.png" width="70%" style="margin-top: 30%; margin-left: 10%" class="round-corner">
         </div>
     </div>
     <hr>

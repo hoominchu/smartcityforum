@@ -11,8 +11,8 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <span class="pull-left" style="margin-top: 1%"><img src="images/scf_white_notext.png" height="35px"></span>
-            <a class="navbar-brand" href="about.jsp">Smart City Forum</a>
+            <span class="pull-left" style="margin-top: 4%"><img src="images/mycity-logo" height="35px"></span>
+            <a class="navbar-brand" href="about.jsp">&nbsp;mycity</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

@@ -32,16 +32,43 @@
 
     <script type="text/javascript" src="commonfiles/slick/slick.min.js"></script>
 
+    <script>
+        var x = document.getElementById("localert");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(submitPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function submitPosition(position) {
+            document.getElementById("lat").value = position.coords.latitude
+            document.getElementById("long").value = position.coords.longitude
+            document.getElementById("locationform").submit();
+        }
+    </script>
+
 </head>
 <body>
 <%@include file="navbar.jsp" %>
 <%@include file="header.jsp" %>
+
+<form action="location.jsp" name="locationform" id="locationform" method="post">
+    <input type="hidden" name="lat" id="lat" value="">
+    <input type="hidden" name="long" id="long" value="">
+</form>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <h3 style="padding-bottom:1em">Browse by</h3>
+            <div class="btn-group-vertical round-corner" style="width:100%; margin-bottom: 2em">
+                <a class="btn-link btn btn-default btn-lg btn-block round-corner" onclick="getLocation()" style="border: 1px solid; border-color:#c1c1c1;">My Ward</a>
+            </div>
+            <div class="text-danger" id="localert"></div>
             <div class="btn-group-vertical round-corner" style="width:100%; height: 19em">
                 <a href="selectward.jsp" class="btn-link btn btn-default btn-lg btn-block" style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;">Ward</a>
                 <a href="selectworktype.jsp" class="btn-link btn btn-default btn-lg btn-block" style="border: 1px solid; border-color:#c1c1c1; ">Work Type</a>
