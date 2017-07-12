@@ -107,11 +107,24 @@
     <script>
         function initMap() {
             var mapDiv = document.getElementById('map');
+            var myLatLng = {lat: <%=work.get(0).latitude%>, lng: <%=work.get(0).longitude%>};
             var map = new google.maps.Map(mapDiv, {
-                zoom: 10,
+                zoom: 16,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                scrollwheel: false
+                scrollwheel: false,
+                center: myLatLng
             });
+            <%
+            if (work.get(0).hasLocation){
+            %>
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: '<%=work.get(0).workDescriptionFinal%>'
+            });
+            <%
+            }
+            %>
             <%
             File workDir = new File(imagePath).getCanonicalFile();
             File[] files = workDir.listFiles();
@@ -123,6 +136,7 @@
                 url: '<%=LoadProperties.properties.getString("PathToKMLFilesRootFolder")%><%=workIDParameter%><%=File.separator%><%=file.getName()%>',
                 map: map
             });
+
             <%
                     }
                 }
@@ -143,14 +157,39 @@
         }
     </script>
 
+    <script>
+        var x = document.getElementById("localert");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(submitPosition, errorMessage, {enableHighAccuracy: true});
+            }
+        }
+
+        function errorMessage() {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+
+        function submitPosition(position) {
+            document.getElementById("lat").value = position.coords.latitude
+            document.getElementById("long").value = position.coords.longitude
+            document.getElementById("locationform").submit();
+        }
+    </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initMap"
             async defer></script>
 </head>
 <body>
 
 <%@include file="navbar.jsp" %>
-
 <%@include file="header.jsp" %>
+
+<form action="location.jsp" name="locationform" id="locationform" method="post">
+    <input type="hidden" name="lat" id="lat" value="">
+    <input type="hidden" name="long" id="long" value="">
+    <input type="hidden" name="workID" id="workID" value="<%=request.getParameter("workID")%>">
+</form>
 
 <div class="container">
 
@@ -159,25 +198,37 @@
         <div class="panel-body round-corner">
             <%=General.cleanText(work.get(0).workDescriptionEnglish)%>
         </div>
-        <%
-            if (!subscription) {
-        %>
-        <%--button to subscribe--%>
-        <button id="subscribeButton" class="btn btn-default btn-block round-corner-bottom"
-                style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
-                onclick="subscribe()">Click here to subscribe to this work!
-        </button>
-        <%
-        } else {
-        %>
-        <%--button to unsubscribe--%>
-        <button id="unsubscribeButton" class="btn btn-default btn-block round-corner-bottom"
-                style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
-                onclick="unsubscribe()">Click here to unsubscribe from this work!
-        </button>
-        <%
-            }
-        %>
+
+        <div class="btn-group btn-group-justified">
+            <%
+                if (!subscription) {
+            %>
+            <a href="#" id="subscribeButton" class="btn btn-default round-corner-bottom-left"
+               style="background-color: #D0E9C6; border-width: 0px; font-size: 15px;"
+               onclick="subscribe()">Click here to subscribe to this work!</a>
+            <%
+            } else {
+            %>
+            <a href="#" id="unsubscribeButton" class="btn btn-default round-corner-bottom-left"
+               style="background-color: #EBCCCC; border-width: 0px; font-size: 15px;"
+               onclick="unsubscribe()">Click here to unsubscribe to this work!</a>
+            <%
+                }
+                if (LoginChecks.isAuthorisedUser(request)) {
+                    if (work.get(0).hasLocation) {
+            %>
+            <a href="#" data-toggle="modal" data-target=".add-location-modal" class="btn btn-default round-corner-bottom-right"
+               style="border-width: 0px; font-size: 15px; background-color: #5BC0DE">Update the location of this work</a>
+            <%
+            } else {
+            %>
+            <a href="#" data-toggle="modal" data-target=".add-location-modal" class="btn btn-primary round-corner-bottom-right"
+               style="border-width: 0px; font-size: 15px; background-color: #5BC0DE">Tag this work with location</a>
+            <%
+                    }
+                }
+            %>
+        </div>
     </div>
 
     <div class="btn-group btn-group-justified">
@@ -185,9 +236,9 @@
            class="btn btn-default round-corner-top-left">Work Info</a>
 
         <%
-            if (Work.doesFileExist(rootFolder + workIDParameter + File.separator, ".kml")) {
+            if ((Work.doesFileExist(rootFolder + workIDParameter + File.separator, ".kml")) || (work.get(0).hasLocation)) {
         %>
-        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=map" class="btn btn-default round-corner-top-left">Map</a>
+        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=map" class="btn btn-default round-corner-top-right">Map</a>
         <%
             }
         %>
@@ -659,6 +710,42 @@
         });
     });
 </script>
+
+<div class="modal fade add-location-modal">
+    <div class="modal-dialog">
+        <div class="modal-content round-corner">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add or update location</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group round-corner">
+                    <label class="control-label round-corner" for="latitudeinput">Latitude</label>
+                    <input class="form-control round-corner" id="latitudeinput" type="text" value="">
+                </div>
+                <div class="form-group round-corner">
+                    <label class="control-label round-corner" for="longitudeinput">Longitude</label>
+                    <input class="form-control round-corner" id="longitudeinput" type="text" value="">
+                </div>
+                <h4 class="text-muted" style="text-align: center">or</h4>
+                <a href="#" onclick="getLocation()" class="btn btn-primary round-corner"
+                   style="font-size: 15px; background-color: #5AB5D2">Use your GPS location</a>
+                <%
+                    if (work.get(0).hasLocation) {
+                %>
+                <h4 class="text-muted" style="text-align: center">or</h4>
+                <a href="#" onclick="getLocation()" class="btn btn-danger round-corner"
+                   style="font-size: 15px; background-color: #F58471">Remove location</a>
+                <%
+                    }
+                %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default round-corner" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%@include file="footer.jsp" %>
 <%@include file="contactmodal.jsp" %>

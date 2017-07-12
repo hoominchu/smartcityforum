@@ -142,7 +142,7 @@
             })
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initMap"
             async defer></script>
 
 </head>

@@ -5,10 +5,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
 import java.util.List;
 
 public class Work implements Comparable<Work> {
@@ -38,8 +35,11 @@ public class Work implements Comparable<Work> {
     public String tenderApprovalDate;
     public String minorWorkTypeID;
     public String minorIDMeaning;
+    public String latitude;
+    public String longitude;
+    public Boolean hasLocation;
 
-    public static ArrayList<Work> allWorks = createWorkObjects(new BasicDBObject());
+    static ArrayList<Work> allWorks = createWorkObjects(new BasicDBObject());
 
     //Constructor method for class work
     public Work(DBObject workObject) {
@@ -72,6 +72,11 @@ public class Work implements Comparable<Work> {
             this.sourceOfIncomeID = (workObject.get(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.SourceOfFinanceID")).toString() : "null";
             this.tenderApprovalDate = (workObject.get(LoadProperties.properties.getString("Work.Column.TenderApprovalDate")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.TenderApprovalDate")).toString() : "null";
             this.minorWorkTypeID = (workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeID")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeID")).toString() : "null";
+
+            //Location details
+            this.latitude = (workObject.get("Latitude") != null) ? workObject.get("Latitude").toString() : null;
+            this.longitude = (workObject.get("Longitude") != null) ? workObject.get("Longitude").toString() : null;
+            this.hasLocation = (this.latitude != null);
 
             //Minor ID meaning is not available in the same allworks collection. Hence Querying it from a different collection.
             //this.minorIDMeaning = (workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")) != null) ? workObject.get(LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning")).toString() : "null";
@@ -198,7 +203,7 @@ public class Work implements Comparable<Work> {
     }
 
     private static String getMinorIDMeaning(int minorID) {
-        BasicDBObject query = new BasicDBObject("Code",minorID);
+        BasicDBObject query = new BasicDBObject("Code", minorID);
         return Database.minorWorkTypes.findOne(query).get("Meaning").toString();
     }
 }

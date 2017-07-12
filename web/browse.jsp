@@ -37,10 +37,12 @@
 
         function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(submitPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
+                navigator.geolocation.getCurrentPosition(submitPosition,errorMessage,{enableHighAccuracy:true});
             }
+        }
+
+        function errorMessage() {
+            x.innerHTML = "Geolocation is not supported by this browser.";
         }
 
         function submitPosition(position) {

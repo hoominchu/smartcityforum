@@ -19,21 +19,22 @@ public class Geolocation {
         return DMS;
     }
 
+    public static void addLocationToWork (HttpServletRequest request) {
+        String latitude = request.getParameter("lat");
+        String longitude = request.getParameter("long");
+        String workID = request.getParameter("workID");
+
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"),LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(workID),"Latitude",latitude);
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"),LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(workID),"Longitude",longitude);
+    }
+
     public static String getWard(HttpServletRequest request) {
         String latitude = request.getParameter("lat");
         String longitude = request.getParameter("long");
 
         Boolean locInBoundaries = false;
 
-        String wardBoundariesFilePath = "";
-
-        if (request.getRequestURL().toString().contains(LoadProperties.properties.getString("WebsiteName"))) {
-            wardBoundariesFilePath = LoadProperties.properties.getString("WardBoundariesJSONWeb");
-        } else {
-            wardBoundariesFilePath = LoadProperties.properties.getString("WardBoundariesJSONLocal");
-        }
-
-        String wardBoundariesJSON = FileUtil.getFileAsString(wardBoundariesFilePath);
+        String wardBoundariesJSON = LoadProperties.properties.getString("WardBoundariesJSONString");
 
         JSONObject jsonObject = new JSONObject(wardBoundariesJSON);
         JSONArray polygons = jsonObject.getJSONArray("features");
