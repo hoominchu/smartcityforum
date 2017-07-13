@@ -19,13 +19,18 @@ public class Geolocation {
         return DMS;
     }
 
-    public static void addLocationToWork (HttpServletRequest request) {
+    public static void addLocationToWork(HttpServletRequest request) {
         String latitude = request.getParameter("lat");
         String longitude = request.getParameter("long");
         String workID = request.getParameter("workID");
 
-        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"),LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(workID),"Latitude",latitude);
-        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"),LoadProperties.properties.getString("Work.Column.WorkID"),Integer.parseInt(workID),"Longitude",longitude);
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), "Latitude", latitude);
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), "Longitude", longitude);
+    }
+
+    public static void deleteLocationOfWork(String workID) {
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), "Latitude", null);
+        Database.updateDocument(LoadProperties.properties.getString("Database.allWorks"), LoadProperties.properties.getString("Work.Column.WorkID"), Integer.parseInt(workID), "Longitude", null);
     }
 
     public static String getWard(HttpServletRequest request) {

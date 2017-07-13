@@ -105,6 +105,9 @@
 
 
     <script>
+        <%
+            if (work.get(0).hasLocation){
+            %>
         function initMap() {
             var mapDiv = document.getElementById('map');
             var myLatLng = {lat: <%=work.get(0).latitude%>, lng: <%=work.get(0).longitude%>};
@@ -114,9 +117,7 @@
                 scrollwheel: false,
                 center: myLatLng
             });
-            <%
-            if (work.get(0).hasLocation){
-            %>
+
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
@@ -171,9 +172,13 @@
         }
 
         function submitPosition(position) {
-            document.getElementById("lat").value = position.coords.latitude
-            document.getElementById("long").value = position.coords.longitude
+            document.getElementById("lat").value = position.coords.latitude;
+            document.getElementById("long").value = position.coords.longitude;
             document.getElementById("locationform").submit();
+        }
+
+        function deleteLocation() {
+            document.getElementById("deletelocationform").submit();
         }
     </script>
 
@@ -189,6 +194,10 @@
     <input type="hidden" name="lat" id="lat" value="">
     <input type="hidden" name="long" id="long" value="">
     <input type="hidden" name="workID" id="workID" value="<%=request.getParameter("workID")%>">
+</form>
+
+<form action="location.jsp" name="deletelocationform" id="deletelocationform" method="post">
+    <input type="hidden" name="workID" value="<%=request.getParameter("workID")%>">
 </form>
 
 <div class="container">
@@ -217,12 +226,15 @@
                 if (LoginChecks.isAuthorisedUser(request)) {
                     if (work.get(0).hasLocation) {
             %>
-            <a href="#" data-toggle="modal" data-target=".add-location-modal" class="btn btn-default round-corner-bottom-right"
-               style="border-width: 0px; font-size: 15px; background-color: #5BC0DE">Update the location of this work</a>
+            <a href="#" data-toggle="modal" data-target=".add-location-modal"
+               class="btn btn-default round-corner-bottom-right"
+               style="border-width: 0px; font-size: 15px; background-color: #F58471">Update the location of this
+                work</a>
             <%
             } else {
             %>
-            <a href="#" data-toggle="modal" data-target=".add-location-modal" class="btn btn-primary round-corner-bottom-right"
+            <a href="#" data-toggle="modal" data-target=".add-location-modal"
+               class="btn btn-primary round-corner-bottom-right"
                style="border-width: 0px; font-size: 15px; background-color: #5BC0DE">Tag this work with location</a>
             <%
                     }
@@ -232,13 +244,13 @@
     </div>
 
     <div class="btn-group btn-group-justified">
-        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=info"
-           class="btn btn-default round-corner-top-left">Work Info</a>
+        <a href="#"
+           class="btn btn-default round-corner-top">Work Info</a>
 
         <%
             if ((Work.doesFileExist(rootFolder + workIDParameter + File.separator, ".kml")) || (work.get(0).hasLocation)) {
         %>
-        <a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=map" class="btn btn-default round-corner-top-right">Map</a>
+        <%--<a href="<%=baseLink%>workID=<%=workIDParameter%>&jumbotron=map" class="btn btn-default round-corner-top-right">Map</a>--%>
         <%
             }
         %>
@@ -259,7 +271,7 @@
                 if (bills.size() > 0) {
         %>
 
-        <table class="table table-striped table-hover" style="font-size: 10pt; text-align: center">
+        <table class="table table-striped table-hover" style="font-size: 10pt;">
             <thead>
 
             </thead>
@@ -343,133 +355,195 @@
             }
         } else if (jumbotronParameter == null || jumbotronParameter.equals("map")) {
         %>
-        <div id="map" class="round-corner-bottom" style="width:100%; height: 26em; position: relative"></div>
+        <%--<div id="map" class="round-corner-bottom" style="width:100%; height: 26em; position: relative"></div>--%>
         <%
-        } else if (jumbotronParameter.equals("info")) {
+        } else if (jumbotronParameter.equals("info") || jumbotronParameter.equals("map")) {
             for (Bill bill : bills) {
                 totalBillPaid = totalBillPaid + Integer.parseInt(bill.paidAmount);
             }
         %>
         <div id="workInfo" style="width: 100%; position: relative;">
-            <div class="panel panel-default">
-                <div class="panel-body">
-
-                    <table class="table table-striped table-hover" style="font-size: 10pt;">
-                        <thead>
-
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Work ID :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>workID=<%=work.get(0).workID%>"><%=work.get(0).workID%>
-                            </a>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Ward :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>wardNumber=<%=work.get(0).wardNumber%>"><%=work.get(0).wardNumber%>
-                            </a>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Work Type :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>workTypeID=<%=work.get(0).workTypeID%>"><%=work.get(0).workType%>
-                            </a>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Source of Income :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>sourceOfIncomeID=<%=work.get(0).sourceOfIncomeID%>"><%=work.get(0).sourceOfIncome%>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Year :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>year=<%=work.get(0).year%>"><%=work.get(0).year%>
-                            </a>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Work Order Date :</td>
-                            <td style="text-align: left"><b><%=work.get(0).workOrderDate%>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Work Completion Date :</td>
-                            <td style="text-align: left"><b><%=work.get(0).workCompletionDate%>
-                            </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Contractor :</td>
-                            <td style="text-align: left"><b><a
-                                    href="<%=worksPage%>contractorID=<%=work.get(0).contractorID%>"><%=work.get(0).contractor%>
-                            </a>
-                            </b>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Contractor's contact :</td>
-                            <td style="text-align: left"><b>Not available</b>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Amount Sanctioned :</td>
-                            <td style="text-align: left"><b>
-                                &#8377 <%=General.rupeeFormat(work.get(0).amountSanctionedString)%>
-                            </b>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td style="text-align: right; width: 50%"> Amount Paid :</td>
-                            <td style="text-align: left"><b><%
-                                if (totalBillPaid != 0) { %>
-                                &#8377 <%=General.rupeeFormat(Integer.toString(totalBillPaid))%>
-                                <%
-                                } else {
-                                %>
-                                Bill not yet paid
-                                <%
+            <div class="panel panel-default round-corner-bottom" style="height: 33.5em">
+                <div class="panel-body" style="height: 32em">
+                    <div class="row">
+                        <div class="col-sm-4 round-corner" style="font-size: 12pt; height: 100%; width: 30%; margin-left: 1.6em">
+                            <div class="list-group round-corner">
+                                <a href="#"
+                                   class="list-group-item round-corner-top">
+                                    Work ID <span class="badge"><%=work.get(0).workID%></span>
+                                </a>
+                                <a href="<%=worksPage%>wardNumber=<%=work.get(0).wardNumber%>" class="list-group-item">Ward <span class="badge"><%=work.get(0).wardNumber%></span>
+                                </a>
+                                <a href="<%=worksPage%>workTypeID=<%=work.get(0).workTypeID%>" class="list-group-item">Work
+                                    Type <span class="badge"><%=work.get(0).workType%></span>
+                                </a>
+                                <a href="<%=worksPage%>sourceOfIncomeID=<%=work.get(0).sourceOfIncomeID%>" class="list-group-item">Source of Income <span class="badge"><%=work.get(0).sourceOfIncome%></span>
+                                </a>
+                                <a href="<%=worksPage%>year=<%=work.get(0).year%>" class="list-group-item">Year <span class="badge"><%=work.get(0).year%></span>
+                                </a>
+                                <a href="#" class="list-group-item">Work
+                                    Order Date <span class="badge"><%=work.get(0).workOrderDate%></span>
+                                </a>
+                                <a href="<%=worksPage%>workTypeID=<%=work.get(0).workTypeID%>" class="list-group-item">Work Completion Date <span class="badge"><%=work.get(0).workCompletionDate%></span>
+                                </a>
+                                <a href="<%=worksPage%>contractorID=<%=work.get(0).contractorID%>" class="list-group-item">Contractor <span class="badge"><%=work.get(0).contractor%></span>
+                                </a>
+                                <a href="<%=worksPage%>workTypeID=<%=work.get(0).workTypeID%>" class="list-group-item">Contractor's contact <span class="badge">To be updated</span>
+                                </a>
+                                <a href="#" class="list-group-item">Amount Sanctioned : <span class="badge"><%=General.rupeeFormat(work.get(0).amountSanctionedString)%></span>
+                                </a>
+                                <a href="#" class="list-group-item">Amount paid :
+                                    <%
+                                    if (totalBillPaid != 0) { %>
+                                    <span class="badge">&#8377 <%=General.rupeeFormat(Integer.toString(totalBillPaid))%></span>
+                                    <%
+                                    } else {
+                                    %>
+                                    <span class="badge">Bill not yet paid</span>
+                                    <%
                                     }
-                                %>
-                            </b>
-                            </td>
-                        </tr>
-
-                        <tr class="<%=statusColorParameter%>">
-                            <td style="text-align: right; width: 50%"> Status :</td>
-                            <td style="text-align: left"><b
-                                    style="color: <%=work.get(0).statusColor%>"><%=work.get(0).statusfirstLetterCapital%>
-                            </b>
-                            </td>
-                        </tr>
+                                    %>
+                                </a>
+                                <a href="#" class="list-group-item">Status <span class="badge"><%=work.get(0).statusfirstLetterCapital%></span>
+                                </a>
+                            </div>
+                        </div>
                         <%
-                            if (work.get(0).statusfirstLetterCapital.equalsIgnoreCase(LoadProperties.properties.getString("StatusCompleted"))) {
+                            if (work.get(0).hasLocation) {
                         %>
-                        <tr>
-                            <td style="width: 50%; padding-top: 12px; height: 2em; text-align: center; font-size: 10pt">
-                                If you are
-                                unsatisfied with the quality of this work or have any other complaints, <a
-                                    href="http://www.mrc.gov.in/janahita/LoadGrievanceForm"> click here.</a></td>
-                        </tr>
+                        <div class="col-sm-8 round-corner">
+                            <div id="map" class="round-corner"
+                                 style="width:100%; height: 29.75em; position: relative; text-align: center"></div>
+                        </div>
+                        <%
+                            } else {
+                        %>
+                        <div class="col-sm-8 round-corner">
+                            <div id="messagebox" class="round-corner"
+                                 style="width:100%; height: 29.75em; position: relative; text-align: center"><p class="text-muted" style="font-size:12pt; padding-top: 25%">Map not available for this work</p></div>
+                        </div>
                         <%
                             }
                         %>
-                        </tbody>
-                    </table>
+                    </div>
+
+                    <%--<table class="table table-striped table-hover" style="font-size: 10pt;">--%>
+                    <%--<thead>--%>
+
+                    <%--</thead>--%>
+
+                    <%--<tbody>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Work ID :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>workID=<%=work.get(0).workID%>"><%=work.get(0).workID%>--%>
+                    <%--</a>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Ward :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>wardNumber=<%=work.get(0).wardNumber%>"><%=work.get(0).wardNumber%>--%>
+                    <%--</a>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Work Type :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>workTypeID=<%=work.get(0).workTypeID%>"><%=work.get(0).workType%>--%>
+                    <%--</a>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Source of Income :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>sourceOfIncomeID=<%=work.get(0).sourceOfIncomeID%>"><%=work.get(0).sourceOfIncome%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Year :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>year=<%=work.get(0).year%>"><%=work.get(0).year%>--%>
+                    <%--</a>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Work Order Date :</td>--%>
+                    <%--<td style="text-align: left"><b><%=work.get(0).workOrderDate%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Work Completion Date :</td>--%>
+                    <%--<td style="text-align: left"><b><%=work.get(0).workCompletionDate%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Contractor :</td>--%>
+                    <%--<td style="text-align: left"><b><a--%>
+                    <%--href="<%=worksPage%>contractorID=<%=work.get(0).contractorID%>"><%=work.get(0).contractor%>--%>
+                    <%--</a>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Contractor's contact :</td>--%>
+                    <%--<td style="text-align: left"><b>Not available</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Amount Sanctioned :</td>--%>
+                    <%--<td style="text-align: left"><b>--%>
+                    <%--&#8377 <%=General.rupeeFormat(work.get(0).amountSanctionedString)%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+
+                    <%--<tr>--%>
+                    <%--<td style="text-align: right; width: 50%"> Amount Paid :</td>--%>
+                    <%--<td style="text-align: left"><b><%--%>
+                    <%--if (totalBillPaid != 0) { %>--%>
+                    <%--&#8377 <%=General.rupeeFormat(Integer.toString(totalBillPaid))%>--%>
+                    <%--<%--%>
+                    <%--} else {--%>
+                    <%--%>--%>
+                    <%--Bill not yet paid--%>
+                    <%--<%--%>
+                    <%--}--%>
+                    <%--%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+
+                    <%--<tr class="<%=statusColorParameter%>">--%>
+                    <%--<td style="text-align: right; width: 50%"> Status :</td>--%>
+                    <%--<td style="text-align: left"><b--%>
+                    <%--style="color: <%=work.get(0).statusColor%>"><%=work.get(0).statusfirstLetterCapital%>--%>
+                    <%--</b>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--<%--%>
+                    <%--if (work.get(0).statusfirstLetterCapital.equalsIgnoreCase(LoadProperties.properties.getString("StatusCompleted"))) {--%>
+                    <%--%>--%>
+                    <%--<tr>--%>
+                    <%--<td style="width: 50%; padding-top: 12px; height: 2em; text-align: center; font-size: 10pt">--%>
+                    <%--If you are--%>
+                    <%--unsatisfied with the quality of this work or have any other complaints, <a--%>
+                    <%--href="http://www.mrc.gov.in/janahita/LoadGrievanceForm"> click here.</a></td>--%>
+                    <%--</tr>--%>
+                    <%--<%--%>
+                    <%--}--%>
+                    <%--%>--%>
+                    <%--</tbody>--%>
+                    <%--</table>--%>
                 </div>
             </div>
         </div>
@@ -719,23 +793,53 @@
                 <h4 class="modal-title">Add or update location</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group round-corner">
-                    <label class="control-label round-corner" for="latitudeinput">Latitude</label>
-                    <input class="form-control round-corner" id="latitudeinput" type="text" value="">
-                </div>
-                <div class="form-group round-corner">
-                    <label class="control-label round-corner" for="longitudeinput">Longitude</label>
-                    <input class="form-control round-corner" id="longitudeinput" type="text" value="">
-                </div>
+                <form action="location.jsp" name="locationform" id="locationform" method="post">
+                    <%
+                        String latitude = "";
+                        String longitude = "";
+
+                        if (work.get(0).hasLocation) {
+                            latitude = work.get(0).latitude;
+                            longitude = work.get(0).longitude;
+                        }
+                    %>
+                    <div class="form-group round-corner">
+                        <label class="control-label round-corner" for="latitudeinput">Latitude</label>
+                        <input class="form-control round-corner" name="lat" id="latitudeinput" type="text"
+                               value="<%=latitude%>">
+                    </div>
+                    <div class="form-group round-corner">
+                        <label class="control-label round-corner" for="longitudeinput">Longitude</label>
+                        <input class="form-control round-corner" name="long" id="longitudeinput" type="text"
+                               value="<%=longitude%>">
+                    </div>
+                    <input type="hidden" name="workID" value="<%=request.getParameter("workID")%>">
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <input type="submit" class="btn btn-primary round-corner col-xs-4">
+                        <div class="col-xs-4"></div>
+                    </div>
+
+                </form>
+                <hr>
                 <h4 class="text-muted" style="text-align: center">or</h4>
-                <a href="#" onclick="getLocation()" class="btn btn-primary round-corner"
-                   style="font-size: 15px; background-color: #5AB5D2">Use your GPS location</a>
+                <div class="row">
+                    <div class="col-xs-3"></div>
+                    <a href="#" onclick="getLocation()" class="btn btn-primary round-corner col-xs-6"
+                       style="font-size: 15px; background-color: #5AB5D2">Use your GPS location</a>
+                    <div class="col-xs-3"></div>
+                </div>
                 <%
                     if (work.get(0).hasLocation) {
                 %>
+                <hr>
                 <h4 class="text-muted" style="text-align: center">or</h4>
-                <a href="#" onclick="getLocation()" class="btn btn-danger round-corner"
-                   style="font-size: 15px; background-color: #F58471">Remove location</a>
+                <div class="row">
+                    <div class="col-xs-3"></div>
+                    <a href="#" onclick="deleteLocation()" class="btn btn-danger round-corner col-xs-6"
+                       style="font-size: 15px; background-color: #F58471">Remove location</a>
+                    <div class="col-xs-3"></div>
+                </div>
                 <%
                     }
                 %>

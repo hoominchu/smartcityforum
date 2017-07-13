@@ -14,7 +14,7 @@
 <%@ page import="java.util.Map" %>
 <%
     try {
-
+        
         long initialTime = System.currentTimeMillis();
 
         String baseLink = "dashboard.jsp?";
@@ -128,18 +128,7 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 scrollwheel: false
             });
-            var wardBoundariesLayer = new google.maps.KmlLayer({
-                url: 'http://hack4hd.org/data/HD-ward-boundaries.kml',
-                map: map
-            });
-            var landmarks = new google.maps.KmlLayer({
-                url: 'http://hack4hd.org/data/HD-landmarks.kml',
-                map: map
-            });
-            var hoardings = new google.maps.KmlLayer({
-                url: 'http://hack4hd.org/data/HD-hoardings.kml',
-                map: map
-            })
+            map.data.loadGeoJson('http://hdworks.org/smartcityData/GISgeneral/HD-ward-boundaries.json');
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initMap"

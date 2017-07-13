@@ -13,9 +13,21 @@
 <%
     String referer = request.getHeader("referer");
     if (referer.contains("workDetails.jsp")) {
-        Geolocation.addLocationToWork(request);
-        response.sendRedirect(referer);
-    } else {
+        //For adding location
+        if (request.getParameter("lat") != null) {
+            Geolocation.addLocationToWork(request);
+            response.sendRedirect(referer);
+        }
+        //For deleting location
+        else {
+            String workID = request.getParameter("workID");
+            Geolocation.deleteLocationOfWork(workID);
+            response.sendRedirect(referer.replace("map","info"));
+        }
+
+    }
+    //Assuming request comes from browse.jsp
+    else {
         String ward = Geolocation.getWard(request);
         if (NumberUtils.isNumber(ward)) {
             response.sendRedirect("works.jsp?wardNumber=" + ward);

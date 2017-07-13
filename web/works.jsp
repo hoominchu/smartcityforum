@@ -85,8 +85,15 @@
         int completedWorks = 0;
         int inprogressWorks = 0;
 
-        // Finds the totals of the works displayed.
+        Boolean atleastOneWorkHasLocation = false;
+
+        // Finds the totals of the works displayed. Check if any of the works has location and count the number of works with location.
+        int numOfWorksWithLocation = 0;
         for (Work tempWork : works) {
+            if (tempWork.hasLocation) {
+                atleastOneWorkHasLocation = true;
+                numOfWorksWithLocation++;
+            }
             amountSpent = amountSpent + Long.valueOf(tempWork.amountSanctioned);
             if (tempWork.statusfirstLetterCapital.equalsIgnoreCase(LoadProperties.properties.getString("StatusCompleted"))) {
                 completedWorks++;
@@ -97,7 +104,6 @@
 
         String amountSpentString = General.rupeeFormat(amountSpent.toString());
         String numberOfWorksDisplayedString = General.rupeeFormat(numberOfWorksDisplayed.toString());
-
 %>
 
 <html>
@@ -201,6 +207,89 @@
             window.location = "subscribe.jsp?unsubscribe=true&sourceOfIncomeID=<%=sourceOfIncomeIDParameter%>"
         }
     </script>
+
+    <script>
+        jQuery(function ($) {
+            // Asynchronously Load the map API
+            var script = document.createElement('script');
+            script.src = "//maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initialize";
+            document.body.appendChild(script);
+        });
+
+        function initialize() {
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap'
+            };
+
+            // Display a map on the page
+            map = new google.maps.Map(document.getElementById("worksmap"), mapOptions);
+            map.setTilt(45);
+
+            // Multiple Markers
+            var markers = [
+                <%
+                for (Work tempWork : works) {
+                if (tempWork.hasLocation){
+                 %>
+                ['<%=tempWork.workDescriptionEnglish%>', <%=tempWork.latitude%>, <%=tempWork.longitude%>],
+                <%
+                        }
+                        }
+                        %>
+            ];
+
+            // Info Window Content
+            var infoWindowContent = [
+                <%
+                for (Work tempWork : works) {
+                if (tempWork.hasLocation){
+                 %>
+                ['<%=tempWork.workDescriptionEnglish%>' + '<hr>' + '<a style="padding-bottom:3px" href="workDetails.jsp?workID=<%=tempWork.workID%>&jumbotron=info">' + 'Go to work details page' + '</a>'],
+                <%
+                        }
+                        }
+                        %>
+
+            ];
+
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Loop through our array of markers & place each one on the map
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+                bounds.extend(position);
+                marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: markers[i][0]
+                });
+
+                // Allow each marker to have an info window
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infoWindow.setContent(infoWindowContent[i][0]);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, i));
+
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+            }
+
+//            // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+//            var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+//                this.setZoom(14);
+//                google.maps.event.removeListener(boundsListener);
+//            });
+
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%=LoadProperties.properties.getString("GoogleMapsAPIKey")%>&callback=initMap"
+            async defer></script>
 </head>
 
 <body>
@@ -311,7 +400,15 @@
              style="text-align: center; width: 100%; display: inline-block;">
             <div class="panel-heading round-corner-top">Overview</div>
             <div class="panel-body round-corner">
-                    <span class="col-sm-3 overview-element">
+                <%
+                    if (atleastOneWorkHasLocation) {
+                %>
+                <div id="worksmap" class="round-corner"
+                     style="width:100%; height: 26em; position: relative; margin-bottom: 2em"></div>
+                <%
+                    }
+                %>
+                    <span class="col-xs-3 overview-element">
                     Number of Works
                     <h4>
                         <%
@@ -323,15 +420,19 @@
                         %><b><%=numberOfWorksDisplayedString%>
                     </b></h4>
                         </span>
-                    <span class="col-sm-3 overview-element">
+                    <span class="col-xs-2 overview-element">
                     In progress <h4><b><%=General.rupeeFormat(inprogressWorks)%>
                 </b></h4>
                     </span>
-                    <span class="col-sm-3 overview-element">
+                    <span class="col-xs-2 overview-element">
                     Completed <h4><b><%=General.rupeeFormat(completedWorks)%>
                 </b></h4>
                         </span>
-                    <span class="col-sm-3">
+                <span class="col-xs-2 overview-element">
+                    Works with location <h4><b><%=numOfWorksWithLocation%>
+                </b></h4>
+                        </span>
+                    <span class="col-xs-3">
                     Amount Spent <h4><b><%=amountSpentString%>
                 </b></h4>
                         </span>
@@ -555,6 +656,8 @@
                         //String tenderApprovalDate = work.tenderApprovalDate;
                         //String customSortKeyTenderDate = General.customSortKeySortTableJS(tenderApprovalDate);
 
+                        Boolean hasLocation = work.hasLocation;
+
                         String billPaidColor = General.setBillPaidColor(amountSanctioned, billPaid);
 
                         if (today.after(completionDate) && status.equalsIgnoreCase(LoadProperties.properties.getString("StatusInprogress"))) {
@@ -595,10 +698,10 @@
                        aria-hidden="true" title="Images of this work are available"></i>
                     <%
                         }
-                        if (Work.doesFileExist(rootFolder + workID + File.separator, ".kml")) {
+                        if ((Work.doesFileExist(rootFolder + workID + File.separator, ".kml")) || (hasLocation)) {
                     %>
                     <i class="fa fa-map-marker"
-                       style="font-size: 12pt; margin-top: 2px; margin-left: 5px"
+                       style="font-size: 15pt; margin:5px"
                        aria-hidden="true" title="Map of this work is available"></i>
                     <%
                         }
@@ -631,7 +734,7 @@
                     <%--<%--%>
                     <%--}--%>
                     <%--%>--%>
-                    </span>
+                    <%--</span>--%>
 
                     <%--<br>--%>
                     <%--Difference : &nbsp;--%>
