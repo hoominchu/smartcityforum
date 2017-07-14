@@ -350,14 +350,14 @@
         <%
         } else {
         %>
-        <h4 style="text-align: center; padding: 15%;"><u><b>Bill not yet paid</b></u></h4>
+        <%--<h4 style="text-align: center; padding: 15%;"><u><b>Bill not yet paid</b></u></h4>--%>
         <%
             }
         } else if (jumbotronParameter == null || jumbotronParameter.equals("map")) {
         %>
         <%--<div id="map" class="round-corner-bottom" style="width:100%; height: 26em; position: relative"></div>--%>
         <%
-        } else if (jumbotronParameter.equals("info") || jumbotronParameter.equals("map")) {
+        } else if (jumbotronParameter.equals("info") || jumbotronParameter.equals("map") || jumbotronParameter == null) {
             for (Bill bill : bills) {
                 totalBillPaid = totalBillPaid + Integer.parseInt(bill.paidAmount);
             }

@@ -32,7 +32,6 @@
 <body>
 
 <%@include file="navbar.jsp" %>
-
 <%@include file="header.jsp" %>
 
 <div class="container">
@@ -46,7 +45,7 @@
         upload more.</h3>
     <br>
     <br>
-    <h3><a href="workDetails.jsp?workID=<%=workIDParameter%>"> Click here </a> to go the work page.</h3>
+    <h3><a href="workDetails.jsp?workID=<%=workIDParameter%>&jumbotron=info"> Click here </a> to go the work page.</h3>
     <%
         } catch (Exception e) {
             System.out.println("Error message " + e.getMessage());

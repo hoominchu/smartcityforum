@@ -11,7 +11,7 @@ public class Database {
 
     final public static MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
     final private static Mongo mongo = new Mongo();
-    final private static DB db = mongo.getDB(LoadProperties.properties.getString("Database.DBName"));
+    final private static DB db = mongo.getDB("smartcitydb");
 
     final public static DBCollection allworks = db.getCollection(LoadProperties.properties.getString("Database.allWorks"));
     final public static DBCollection workDetails = db.getCollection(LoadProperties.properties.getString("Database.workDetails"));

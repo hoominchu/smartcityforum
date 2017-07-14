@@ -18,6 +18,7 @@
 <%@ page import="smartcity.*" %>
 <%
     try {
+        String referer = request.getHeader("referer");
         String workIDParameter = request.getParameter("workID");
         workIDParameter = StringEscapeUtils.escapeHtml4(workIDParameter);
 
@@ -34,7 +35,7 @@
 %>
 <script>
     alert("You are not authorised to login. Contact 'inspection.hdmc@gmail.com' to get access.");
-    window.location = "workDetails.jsp?workID=" + <%=workIDParameter%>;
+    window.location = <%=referer%>;
 </script>
 <%
 }
@@ -72,7 +73,7 @@ else if (LoginChecks.isAuthorisedUser(request)) {
         e.printStackTrace();
 %>
 <script>
-    window.location = "workDetails.jsp?workID=" + <%=workIDParameter%>;
+    window.location = <%=referer%>;
 </script>
 <%
             }

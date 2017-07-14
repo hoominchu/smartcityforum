@@ -13,6 +13,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String referer = request.getHeader("referer");
     String worksPage = "works.jsp?";
     String workIDParameter = StringEscapeUtils.escapeHtml4(request.getParameter("workID"));
 

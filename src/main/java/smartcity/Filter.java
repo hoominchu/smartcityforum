@@ -33,12 +33,13 @@ public class Filter {
         } else if (!isNumeric) {
             parameterValuePresentableObject.put(queryKey, pV);
         }
-        DBCursor cursor = Database.allworks.find(parameterValuePresentableObject);
 
-        while (cursor.hasNext()) {
-            DBObject object = cursor.next();
-            this.parameterValuePresentable = object.get(pP).toString();
-            break;
+        try {
+            BasicDBObject oneObj = (BasicDBObject) Database.allworks.findOne(parameterValuePresentableObject);
+            this.parameterValuePresentable = oneObj.get(pP).toString();
+        } catch (NullPointerException NE) {
+            BasicDBObject oneObj = (BasicDBObject) Database.minorWorkTypes.findOne(parameterValuePresentableObject);
+            this.parameterValuePresentable = oneObj.get(pP).toString();
         }
     }
 
@@ -107,7 +108,7 @@ public class Filter {
         if (minorIDParameter != null) {
             myQuery.put(LoadProperties.properties.getString("Work.Column.MinorWorkTypeID"), Integer.parseInt(minorIDParameter));
 
-            Filter click = new Filter("minorID", minorIDParameter, LoadProperties.properties.getString("Work.Column.MinorWorkTypeIDMeaning"), LoadProperties.properties.getString("Work.Column.MinorWorkTypeID"));
+            Filter click = new Filter("minorID", minorIDParameter, "Meaning", "Code");
             FILTERS.add(click);
         }
 

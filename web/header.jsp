@@ -29,7 +29,7 @@
 
     <form action="works.jsp" method="get">
         <div class="input-group" style="margin-bottom: 1em">
-            <input type="text" class="form-control round-corner-left" name="q" placeholder="Search here...">
+            <input type="text" class="form-control round-corner-left" name="q" placeholder="Search by work ID">
             <span class="input-group-btn">
                 <button class="btn btn-default round-corner-right" type="submit">Search</button>
             </span>
