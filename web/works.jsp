@@ -176,10 +176,10 @@
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
             a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
+                m = s.getElementsByTagName(o)[0];
             a.async = 1;
             a.src = g;
             m.parentNode.insertBefore(a, m)
@@ -408,73 +408,60 @@
                 <%
                     }
                 %>
-                    <span class="col-xs-3 overview-element">
-                    Number of Works
-                    <h4>
-                        <%
-                            if (showRecentParameter != null && showRecentParameter.equals("true")) {
-                        %>
-                        <small>Most recent</small>
-                        <%
-                            }
-                        %><b><%=numberOfWorksDisplayedString%>
-                    </b></h4>
-                        </span>
-                    <span class="col-xs-2 overview-element">
-                    In progress <h4><b><%=General.rupeeFormat(inprogressWorks)%>
-                </b></h4>
-                    </span>
-                    <span class="col-xs-2 overview-element">
-                    Completed <h4><b><%=General.rupeeFormat(completedWorks)%>
-                </b></h4>
-                        </span>
-                <span class="col-xs-2 overview-element">
-                    Works with location <h4><b><%=numOfWorksWithLocation%>
-                </b></h4>
-                        </span>
-                    <span class="col-xs-3">
-                    Amount Spent <h4><b><%=amountSpentString%>
-                </b></h4>
-                        </span>
-            </div>
-            <a href="#" class="btn btn-default round-corner-bottom btn-block" data-toggle="modal"
-               data-target=".dashboard-modal">Show Dashboard</a>
-        </div>
 
-        <!--
-        <div class="panel panel-default round-corner pull-right chart-box"
-             style="text-align: center;display: inline-block;">
-            <div class="panel-heading round-corner-top">Dashboard</div>
-            <div class="panel-body round-corner">
-                <div id="loading-chart-gif" style="height: 10em; width: 100%;">
-                    <small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart
-                        loads...
-                    </small>
-                </div>
-                <div id="dashboard" style="width:100%; height:23em; z-index: 100; margin-top: -10em"></div>
-            </div>
-        </div>
-        -->
+                <!------------>
 
-        <div class="modal fade dashboard-modal round-corner">
-            <div class="modal-dialog modal-large round-corner" style="width: 80%">
-                <div class="modal-content round-corner">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Dashboard</h4>
+
+                <div class="jumbotron round-corner-bottom" style="padding: 0; margin-bottom: 2em">
+
+                    <div id="wardInfo" style="width: 100%; position: relative;">
+                        <div class="panel panel-default round-corner-bottom" style="">
+                            <div class="panel-body">
+
+                                <div class="col-sm-4 round-corner" style="margin-top: 3em;">
+                                    <div class="list-group round-corner">
+                                        <a href="#" class="list-group-item round-corner-top">
+                                            Number of Works <span class="badge"><%=numberOfWorksDisplayedString%></span>
+                                        </a>
+                                        <a href="#" class="list-group-item">In progress <span
+                                                class="badge"><%=General.rupeeFormat(inprogressWorks)%></span>
+                                        </a>
+                                        <a href="#" class="list-group-item">Completed <span
+                                                class="badge"><%=General.rupeeFormat(completedWorks)%></span>
+                                        </a>
+                                        <a href="#" class="list-group-item">Works with location <span
+                                                class="badge"><%=numOfWorksWithLocation%></span>
+                                        </a>
+                                        <a href="#" class="list-group-item">Amount spent <span
+                                                class="badge"><%=amountSpentString%></span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-8 round-corner">
+
+                                    <%
+                                        if (wardNumberParameter != null) {
+                                    %>
+                                    <div id="pie"
+                                         style="min-width: 100px; height: 250px; max-width: 600px; margin: 0 auto"></div>
+                                    <%
+                                    } else { %>
+                                    <div id="dashboard" style="width: 100%"></div>
+                                    <%
+                                        }
+                                    %>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <%--<div id="loading-chart-gif" style="height: 10em; width: 100%;">--%>
-                        <%--<small><i class="fa fa-bar-chart fa-2" aria-hidden="true"></i> &nbsp;Please wait while the chart--%>
-                        <%--loads...--%>
-                        <%--</small>--%>
-                        <%--</div>--%>
-                        <div id="dashboard" style="width: 100%"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default round-corner" data-dismiss="modal">Close</button>
-                    </div>
+
+
                 </div>
+
+
             </div>
         </div>
 
@@ -515,6 +502,68 @@
             String allWardsCompletedWorks = wardDetails[3];
             String allWardsInprogressWorks = wardDetails[4];
         %>
+        <script>
+            Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                return {
+                    radialGradient: {
+                        cx: 0.5,
+                        cy: 0.3,
+                        r: 0.7
+                    },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                    ]
+                };
+            });
+
+            var inProgressWorks = 0;
+            var completedWorks = 0;
+            inProgressWorks = <%=General.rupeeFormat(inprogressWorks)%>;
+            completedWorks = <%=General.rupeeFormat(completedWorks)%>;
+            // Build the chart
+            Highcharts.chart('pie', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Dashboard'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            },
+                            connectorColor: 'silver'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Works',
+                    data: [
+                        {name: 'In Progress', y: inProgressWorks},
+                        {
+                            name: 'Completed Works',
+                            y: completedWorks,
+                            sliced: true,
+                            selected: true
+                        }
+                    ]
+                }]
+            });
+        </script>
+
         <script>
             $(function () {
                 $('#dashboard').highcharts({
@@ -567,7 +616,6 @@
                         name: 'In progress works',
                         data: [<%=allWardsInprogressWorks%>],
                         visible: true
-
                     }, {
                         name: 'Total amount spent',
                         data: [<%=allWardsAmountSpent%>],
@@ -594,13 +642,6 @@
             }
         %>
 
-        <%--<input type="search" class="light-table-filter form-control col-xs-12 round-corner" data-table="searchable"--%>
-        <%--placeholder="Search in displayed results..." style="margin-bottom: 1em; margin-top: 1em">--%>
-
-        <%--<button class="btn btn-default pull-right round-corner-top"--%>
-        <%--onclick="$('#myTable').tableExport({type:'csv',escape:'false'});" href="#">--%>
-        <%--Download Results--%>
-        <%--</button>--%>
 
         <table class="table table-responsive sortable searchable" id="myTable"
                style="margin-top:2em; width: 100%; min-width: 750px; table-layout: fixed">
@@ -678,18 +719,7 @@
                         <%=workDescriptionFinal%>
                     </a>
                     <br>
-                    <%--<% if (work.doWorkDetailsExist) { %>--%>
-                    <%--<i class="fa fa-list-ul"--%>
-                    <%--style="font-size: 12pt; margin-top: 2px"--%>
-                    <%--aria-hidden="true" title="This work has more details"></i>--%>
-                    <%--<% }--%>
-                    <%--if (billPaid > 0) {--%>
-                    <%--%>--%>
-                    <%--<i class="fa fa-money"--%>
-                    <%--style="font-size: 12pt; margin-top: 2px; margin-left: 5px"--%>
-                    <%--aria-hidden="true" title="This work has details of bills paid"></i>--%>
-                    <%--<%--%>
-                    <%--}--%>
+
                     <%
                         if (Work.doesFileExist(rootFolder + workID + File.separator, ".jpg") || Work.doesFileExist(rootFolder + workID + File.separator, ".png")) {
                     %>
@@ -721,40 +751,7 @@
                     Source of Income : <a
                         href="<%=baseLink%><%=dynamicLink%>sourceOfIncomeID=<%=sourceOfIncomeID%>"><%=sourceOfIncome%>
                 </a>
-                    <%--<br>--%>
-                    <%--Bill : &nbsp;--%>
-                    <%--<span style="text-align: center; color: <%=billPaidColor%>">--%>
-                    <%--<%--%>
-                    <%--if (billPaid > 0) {--%>
-                    <%--%>&#8377;&nbsp;<%=General.rupeeFormat(billPaid.toString())%>--%>
-                    <%--<%--%>
-                    <%--} else {--%>
-                    <%--%>--%>
-                    <%--Not paid--%>
-                    <%--<%--%>
-                    <%--}--%>
-                    <%--%>--%>
-                    <%--</span>--%>
 
-                    <%--<br>--%>
-                    <%--Difference : &nbsp;--%>
-                    <%--<span style="text-align: center; color: <%=billPaidColor%>">--%>
-                    <%--<%--%>
-                    <%--if (difference != 0 && billPaid > 0) {--%>
-                    <%--%>&#8377;&nbsp;<%=General.rupeeFormat(difference)%>--%>
-                    <%--<%--%>
-                    <%--} else if (difference == 0) {--%>
-                    <%--%>--%>
-                    <%--Exact amount has been paid--%>
-                    <%--<%--%>
-                    <%--} else if (billPaid == 0) {--%>
-                    <%--%>--%>
-                    <%--NA--%>
-                    <%--<%--%>
-                    <%--}--%>
-                    <%--%>--%>
-                    <%--</span>--%>
-                    <%--<br>--%>
                     <br>
                     Contractor : <a href="<%=baseLink%><%=dynamicLink%>contractorID=<%=contractorID%>"><%=contractor%>
                 </a>
