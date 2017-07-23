@@ -11,7 +11,8 @@
 %>
 <html>
 <head>
-    <title><%=LoadProperties.properties.getString("Allpages.PageTitle")%></title>
+    <title><%=LoadProperties.properties.getString("Allpages.PageTitle")%>
+    </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/<%=LoadProperties.properties.getString("FaviconName")%>" type="image/x-icon"/>
@@ -42,21 +43,40 @@
     <div class="row">
         <div class="col-xs-8">
             <div id="about-project">
-                <p>The Smart City Forum project helps local governments be transparent and get feedback from citizens about their public works. It is based on the principle of open data and citizen participation in local government. As a demonstration, it is being deployed with the data provided by the Hubballi-Dharwad Municipal Corporation (HDMC) in the state of Karnataka in India at <a href="http://hdworks.org/smartcity">hdworks.org</a>.</p>
+                <p>The Smart City Forum project helps local governments be transparent and get feedback from citizens
+                    about their public works. It is based on the principle of open data and citizen participation in
+                    local government. As a demonstration, it is being deployed with the data provided by the
+                    Hubballi-Dharwad Municipal Corporation (HDMC) in the state of Karnataka in India at <a
+                            href="http://hdworks.org/smartcity">hdworks.org</a>.</p>
 
-                <p>This project has two main uses. The first use is for city administrators and local political leaders to track their own works and spending, leading to more clarity in decision-making. For example, city managers can look at the dashboard of ongoing works, get information about ward wise expenditure, funding patterns, visualize various parameters on a map, etc. They can also monitor the works by checking both official and citizen-submitted images and comments.</p>
+                <p>This project has two main uses. The first use is for city administrators and local political leaders
+                    to track their own works and spending, leading to more clarity in decision-making. For example, city
+                    managers can look at the dashboard of ongoing works, get information about ward wise expenditure,
+                    funding patterns, visualize various parameters on a map, etc. They can also monitor the works by
+                    checking both official and citizen-submitted images and comments.</p>
 
-                <p>The second use is for citizens to actively track what is happening around them in their city. A citizen can easily find information about publicly funded works in their ward, or anywhere else. For example, people can get information on the detailed work specifications, funding for the work, precise GPS coordinates of the work, etc. Further, they can directly comment on works and upload their own pictures to give accurate, on-the-ground feedback to city officials, and discuss the project with other citizens.</p>
+                <p>The second use is for citizens to actively track what is happening around them in their city. A
+                    citizen can easily find information about publicly funded works in their ward, or anywhere else. For
+                    example, people can get information on the detailed work specifications, funding for the work,
+                    precise GPS coordinates of the work, etc. Further, they can directly comment on works and upload
+                    their own pictures to give accurate, on-the-ground feedback to city officials, and discuss the
+                    project with other citizens.</p>
 
-                <p>Other cities can easily adopt this software by plugging in their data in a simple, CSV based format. It is free and open source. Contact Prof. Hangal at the Trivedi Center for Political Data (hangal@ashoka.edu.in) for more information. Software developers interested in contributing extensions are also welcome.</p>
+                <p>Other cities can easily adopt this software by plugging in their data in a simple, CSV based format.
+                    It is free and open source. Contact Prof. Hangal at the Trivedi Center for Political Data
+                    (hangal@ashoka.edu.in) for more information. Software developers interested in contributing
+                    extensions are also welcome.</p>
 
-                <p>This project was started as a part of a Smart City Hackathon held in Hubballi Dharwad (hack4hd.org), and developed further by the Trivedi Center for Political Data.</p>
+                <p>This project was started as a part of a Smart City Hackathon held in Hubballi Dharwad (hack4hd.org),
+                    and developed further by the Trivedi Center for Political Data.</p>
 
-                <p>Citizens of Hubballi-Dharwad are invited to give us feedback, suggestions and comments via email at inspection.hdmc@gmail.com.</p>
+                <p>Citizens of Hubballi-Dharwad are invited to give us feedback, suggestions and comments via email at
+                    inspection.hdmc@gmail.com.</p>
             </div>
         </div>
         <div class="col-xs-4">
-            <img src="images/mycity-logo-grey-bg.png" width="70%" style="margin-top: 30%; margin-left: 10%" class="round-corner">
+            <img src="images/mycity-logo-grey-bg.png" width="70%" style="margin-top: 30%; margin-left: 10%"
+                 class="round-corner">
         </div>
     </div>
     <hr>
@@ -164,7 +184,8 @@
     <div style="margin: 1em; display: block;">
         <div class="row">
             <div class="col-xs-5">
-                <a href="http://tcpd.ashoka.edu.in" target="_blank"><img src="images/about/TCPD-Logo.png" height="80px" style="margin-bottom: 3em;"></a>
+                <a href="http://tcpd.ashoka.edu.in" target="_blank"><img src="images/about/TCPD-Logo.png" height="80px"
+                                                                         style="margin-bottom: 3em;"></a>
             </div>
         </div>
     </div>

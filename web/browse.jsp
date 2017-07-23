@@ -37,7 +37,7 @@
 
         function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(submitPosition,errorMessage,{enableHighAccuracy:true});
+                navigator.geolocation.getCurrentPosition(submitPosition, errorMessage, {enableHighAccuracy: true});
             }
         }
 
@@ -68,14 +68,19 @@
         <div class="col-sm-6">
             <h3 style="padding-bottom:1em">Browse by</h3>
             <div class="btn-group-vertical round-corner" style="width:100%; margin-bottom: 2em">
-                <a class="btn-link btn btn-default btn-lg btn-block round-corner" onclick="getLocation()" style="border: 1px solid; border-color:#c1c1c1;">My Ward</a>
+                <a class="btn-link btn btn-default btn-lg btn-block round-corner" onclick="getLocation()"
+                   style="border: 1px solid; border-color:#c1c1c1;">My Ward</a>
             </div>
             <div class="text-danger" id="localert"></div>
             <div class="btn-group-vertical round-corner" style="width:100%; height: 19em">
-                <a href="selectward.jsp" class="btn-link btn btn-default btn-lg btn-block" style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;">Ward</a>
-                <a href="selectworktype.jsp" class="btn-link btn btn-default btn-lg btn-block" style="border: 1px solid; border-color:#c1c1c1; ">Work Type</a>
-                <a href="selectsourceofincome.jsp" class="btn-link btn btn-default btn-lg btn-block" style="border: 1px solid; border-color:#c1c1c1; ">Source of Income</a>
-                <a href="selectyear.jsp" class="btn-link btn btn-default btn-lg btn-block round-corner-bottom" style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;">Year</a>
+                <a href="selectward.jsp" class="btn-link btn btn-default btn-lg btn-block"
+                   style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;">Ward</a>
+                <a href="selectworktype.jsp" class="btn-link btn btn-default btn-lg btn-block"
+                   style="border: 1px solid; border-color:#c1c1c1; ">Work Type</a>
+                <a href="selectsourceofincome.jsp" class="btn-link btn btn-default btn-lg btn-block"
+                   style="border: 1px solid; border-color:#c1c1c1; ">Source of Income</a>
+                <a href="selectyear.jsp" class="btn-link btn btn-default btn-lg btn-block round-corner-bottom"
+                   style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;">Year</a>
             </div>
         </div>
         <div class="col-sm-3"></div>

@@ -64,3 +64,7 @@ a.btn{
     word-wrap:break-word;
     word-break: normal
 }
+
+.list-group-item{
+    overflow: auto;
+}

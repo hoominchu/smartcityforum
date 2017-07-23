@@ -37,13 +37,10 @@
 </head>
 <body>
 <%@include file="navbar.jsp" %>
-
-
 <%
     List sourcesOfIncome = Database.allworks.distinct("Source of Income");
     List sourceOfIncomeIDs = Database.allworks.distinct("Source of Income ID");
 %>
-
 <div class="container">
     <div class="row">
         <div class="col-sm-3"></div>

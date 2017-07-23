@@ -1,4 +1,3 @@
-<%@ page import="smartcity.Database" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -51,7 +50,8 @@
             <h3 style="padding-bottom:1em">Select work type</h3>
             <div class="btn-group-vertical round-corner" style="width:100%; min-height: 19em">
                 <a href="works.jsp?workTypeID=<%=workTypeIDs.get(0)%>" class="btn-link btn btn-default btn-lg btn-block"
-                   style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;"><%=workTypes.get(0)%></a>
+                   style="border: 1px solid; border-color:#c1c1c1; border-top-left-radius: 0.6em; border-top-right-radius: 0.6em;"><%=workTypes.get(0)%>
+                </a>
                 <%
                     for (int i = 1; i < workTypes.size() - 1; i++) {
 
@@ -63,8 +63,10 @@
                 <%
                     }
                 %>
-                <a href="works.jsp?workTypeID=<%=workTypeIDs.get(workTypeIDs.size()-1)%>" class="btn-link btn btn-default btn-lg btn-block round-corner-bottom"
-                   style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;"><%=workTypes.get(workTypes.size()-1)%></a>
+                <a href="works.jsp?workTypeID=<%=workTypeIDs.get(workTypeIDs.size()-1)%>"
+                   class="btn-link btn btn-default btn-lg btn-block round-corner-bottom"
+                   style="border: 1px solid; border-color:#c1c1c1; border-bottom-left-radius: 0.6em; border-bottom-right-radius: 0.6em;"><%=workTypes.get(workTypes.size() - 1)%>
+                </a>
             </div>
         </div>
         <div class="col-sm-3"></div>

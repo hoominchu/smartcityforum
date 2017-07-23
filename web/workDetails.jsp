@@ -363,10 +363,10 @@
             }
         %>
         <div id="workInfo" style="width: 100%; position: relative;">
-            <div class="panel panel-default round-corner-bottom" style="height: 33.5em">
-                <div class="panel-body" style="height: 32em">
+            <div class="panel panel-default round-corner-bottom">
+                <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-4 round-corner" style="font-size: 12pt; height: 100%; width: 30%; margin-left: 1.6em">
+                        <div class="col-sm-3 round-corner" style="overflow: auto;">
                             <div class="list-group round-corner">
                                 <a href="#"
                                    class="list-group-item round-corner-top">
@@ -411,14 +411,14 @@
                         <%
                             if (work.get(0).hasLocation) {
                         %>
-                        <div class="col-sm-8 round-corner">
+                        <div class="col-sm-9 round-corner">
                             <div id="map" class="round-corner"
                                  style="width:100%; height: 29.75em; position: relative; text-align: center"></div>
                         </div>
                         <%
                             } else {
                         %>
-                        <div class="col-sm-8 round-corner">
+                        <div class="col-sm-9 round-corner">
                             <div id="messagebox" class="round-corner"
                                  style="width:100%; height: 29.75em; position: relative; text-align: center"><p class="text-muted" style="font-size:12pt; padding-top: 25%">Map not available for this work</p></div>
                         </div>

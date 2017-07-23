@@ -11,6 +11,7 @@
 %>
 
 <%
+    try {
     String referer = request.getHeader("referer");
     if (referer.contains("workDetails.jsp")) {
         //For adding location
@@ -65,13 +66,17 @@
     <h4 style="width: 100%; text-align: center; padding-top: 8%; min-height: 5%"><b class="text-danger"><i
             class="fa fa-exclamation-circle" aria-hidden="true"></i> &nbsp;Sorry, </b> we think you are outside HDMC
         boundaries. Can you please make sure you are inside and try again!<br><br></h4>
-    <h3 style="width: 100%; text-align: center; padding-top: 3%; min-height: 40%">Or go to <a href="index.jsp"
+    <h4 style="width: 100%; text-align: center; padding-top: 3%; min-height: 40%">Or go to <a href="index.jsp"
                                                                                               class="text-primary">home
-        page</a> and select your ward manually.</h3>
+        page</a> and select your ward manually.</h4>
 </div>
 </body>
 </html>
 <%
         }
     }
+    } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
+        }
 %>
