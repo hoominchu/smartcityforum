@@ -324,7 +324,7 @@
             <div class="panel-heading round-corner-top">Ward Information</div>
             <div class="panel-body">
 
-                <div class="col-sm-3" id="corporatorImage" style=" width: 20%; display: inline-block">
+                <div class="col-xs-3" id="corporatorImage" style=" width: 20%; display: inline-block">
                     <%
                         if (imgURL.length() > 1) {
                     %>
@@ -533,13 +533,14 @@
                         allowPointSelect: true,
                         cursor: 'pointer',
                         dataLabels: {
-                            enabled: true,
+                            enabled: false,
                             format: '<b>{point.name}</b>: {point.percentage:.1f} %',
                             style: {
                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                             },
-                            connectorColor: 'silver'
-                        }
+                            connectorColor: 'silver',
+                        },
+                        showInLegend: true
                     }
                 },
                 series: [{
@@ -547,7 +548,7 @@
                     data: [
                         {name: 'In Progress', y: inProgressWorks},
                         {
-                            name: 'Completed Works',
+                            name: 'Completed',
                             y: completedWorks,
                             sliced: true,
                             selected: true
