@@ -18,7 +18,7 @@
     }
 %>
 <div class="panel-footer" style="text-align: center; color: grey">
-    <small><%=lastUpdatedDate%><br>
+    <small>13 July 2017<br>
         <%=LoadProperties.properties.getString("Footer.CopyRightNOrgnizationName")%>
     </small>
     <br>
