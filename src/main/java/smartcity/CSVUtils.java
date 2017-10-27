@@ -3,10 +3,11 @@ package smartcity;
 /**
  * Created by minchu on 05/01/17.
  */
-import java.io.File;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class CSVUtils {
 
@@ -18,18 +19,18 @@ public class CSVUtils {
         String csvFile = filePath;
         List<List<String>> allLines = new ArrayList<>();
 
-        Scanner scanner = new Scanner(new File(csvFile));
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
+        BufferedReader br = new BufferedReader(new FileReader(csvFile));
+        String rawLine;
+        while ((rawLine = br.readLine()) != null) {
+            List<String> line = parseLine(rawLine);
             //System.out.println(line);
             if (line.size() == 22) {
                 allLines.add(line);
-            }
-            else {
+            } else {
                 //System.out.println(line);
             }
         }
-        scanner.close();
+        br.close();
 
         return allLines;
     }

@@ -3,8 +3,6 @@ package smartcity;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;

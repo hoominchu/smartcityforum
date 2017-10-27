@@ -5,6 +5,7 @@ import com.mongodb.DBCursor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by DSV on 05/01/17.
@@ -32,6 +33,7 @@ public class Email {
                 List<String> newValues = difference.newValues;
                 List<String> headers = difference.headers;
 
+
                 //MODIFICATION IN WORK
                 if (fieldName.equals(LoadProperties.properties.getString("Subscribers.Field1"))) {
 
@@ -50,7 +52,7 @@ public class Email {
                         String currentMessage = "The following has changed in the work: " + workDescription + "\n";
                         int headersSize = headers.size();
                         for (int i = 0; i < headersSize; i++) {
-                            String msg = " - " + headers.get(i) + " has changed from " + previousValues.get(i) + " to " + newValues.get(i);
+                            String msg = " - " + headers.get(i) + " has changed from '" + previousValues.get(i) + "' to '" + newValues.get(i) + "'";
                             currentMessage += msg + "\n";
                             if (i == headersSize - 1) {
                                 currentMessage += "\n";
@@ -92,13 +94,14 @@ public class Email {
 
                         //Modified works in a particular ward
                         if (previousValues != null) {
+                            previousValues = previousValues.stream().distinct().collect(Collectors.toList());
                             for (String workID : previousValues) {
                                 DataEntryDifference modifiedWork = differences.get(differences.indexOf(new DataEntryDifference(workID, LoadProperties.properties.getString("Subscribers.Field1"))));
                                 String workDescription = Work.getWorkDescriptionOfWork(Integer.parseInt(modifiedWork.fieldID));
                                 String currentMessage = "In ward " + fieldID + ", the following has changed in the work: " + workDescription + "\n";
                                 int modifiedWorkHeadersSize = modifiedWork.headers.size();
                                 for (int i = 0; i < modifiedWorkHeadersSize; i++) {
-                                    String msg = " - " + modifiedWork.headers.get(i) + " has changed from " + modifiedWork.previousValues.get(i) + " to " + modifiedWork.newValues.get(i);
+                                    String msg = " - " + modifiedWork.headers.get(i) + " has changed from '" + modifiedWork.previousValues.get(i) + "' to '" + modifiedWork.newValues.get(i) + "'";
                                     currentMessage += msg + "\n";
                                     if (i == modifiedWorkHeadersSize - 1) {
                                         currentMessage += "\n";
@@ -165,6 +168,7 @@ public class Email {
 
                         //Modified works with a particular SOI
                         if (previousValues != null) {
+                            previousValues = previousValues.stream().distinct().collect(Collectors.toList());
                             for (String workID : previousValues) {
                                 DataEntryDifference modifiedWork = differences.get(differences.indexOf(new DataEntryDifference(workID, LoadProperties.properties.getString("Subscribers.Field1"))));
                                 String workDescription = Work.getWorkDescriptionOfWork(Integer.parseInt(modifiedWork.fieldID));
@@ -172,7 +176,7 @@ public class Email {
                                 String currentMessage = "With Source of Income - " + sourceOfIncome + ", the following has changed in the work: " + workDescription + "\n";
                                 int modifiedWorkHeadersSize = modifiedWork.headers.size();
                                 for (int i = 0; i < modifiedWorkHeadersSize; i++) {
-                                    String msg = " - " + modifiedWork.headers.get(i) + " has changed from " + modifiedWork.previousValues.get(i) + " to " + modifiedWork.newValues.get(i);
+                                    String msg = " - " + modifiedWork.headers.get(i) + " has changed from '" + modifiedWork.previousValues.get(i) + "' to '" + modifiedWork.newValues.get(i) + "'";
                                     currentMessage += msg + "\n";
                                     if (i == modifiedWorkHeadersSize - 1) {
                                         currentMessage += "\n";
