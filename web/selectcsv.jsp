@@ -3,13 +3,9 @@
 <%@ page import="smartcity.LoginChecks" %>
 <%@ page import="smartcity.Work" %>
 <%@ page import="java.util.ArrayList" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: minchu
-  Date: 27/06/16
-  Time: 5:42 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     //Use the following checks (full code blocks of if conditions) wherever you want to give access to only authorized users.
@@ -68,46 +64,57 @@ else if (LoginChecks.isSuperUser(request)) {
 <%@include file="navbar.jsp" %>
 <%@include file="header.jsp" %>
 
-<div class="container">
 
-
-    <div class="row">
-        <form name="csv-dropped" action="uploadcsvscript.jsp"
-              class="dropzone round-corner pull-left"
-              style="border: dashed 4px darkgrey; height: 25em; display: inline-block; width: 100%; overflow:auto"
-              id="filesDropzone"
-              method="post"
-              enctype="multipart/form-data">
-        </form>
-
-    </div>
-
-    <button class="btn btn-default round-corner" style="margin-left: 46%" onclick="submitfiles()">Upload</button>
-
-
-</div>
-<script>
-    function logoutAlert() {
-        var r = confirm("You will be logged out of Gmail on all the windows. Do you want to continue?");
-        if (r == true) {
-            window.location = "https://mail.google.com/mail/u/0/?logout&hl=en";
+<%
+    String rootFolder;
+    if (request.getRequestURL().toString().contains(LoadProperties.properties.getString("WebsiteName"))) {
+        rootFolder = LoadProperties.properties.getString("PathToStoreWorksDataOnWeb");
+    } else {
+        rootFolder = LoadProperties.properties.getString("PathToStoreWorksDataLocal");
+    }
+    File folder = new File(rootFolder);
+    File[] listOfFiles = folder.listFiles();
+    List<File> csvFiles = new ArrayList<>();
+    if (listOfFiles != null) {
+        for (File file : listOfFiles) {
+            String fileName = file.getName();
+            if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+                String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+                if (extension.equals("csv")) {
+                    csvFiles.add(file);
+                }
+            }
         }
     }
 
-    function submitfiles() {
-        document.getElementById("filesDropzone").submit();
-        var count = Dropzone.files.length.toString();
-    }
-
-    Dropzone.options.filesDropzone = {
-        dictDefaultMessage: "<i class=\"fa fa-table fa-5\" style='font-size: 20pt' aria-hidden=\"true\"></i> &nbsp; Drag and drop your <b class='text-primary'>CSV files</b> here or click here to browse...",
-        acceptedFiles: ".csv,.zip,.gzip"
-    };
-
-</script>
-<form action="uploadsuccesscsv.jsp" method="post" id="numOfFilesForm">
-    <input type="hidden" name="number-of-files" id="number-of-files">
-</form>
+%>
+<center>
+    <h3> Please select a csv file: </h3>
+    <br/>
+    <form action="updatecsv.jsp" method="post">
+        <div class="btn-group" data-toggle="buttons">
+            <%
+                for (File file : csvFiles) {
+                    String fileName = file.getName();
+            %>
+            <label class="btn btn-primary">
+                <input type="radio" name="fileName" id="fileName"
+                       value="<%=fileName%>"> <%=fileName%>
+            </label>
+            &nbsp;
+            <%="(Last Modified: " + new Date(file.lastModified()) + ")"%>
+            <br>
+            <br/>
+            <%
+                }
+            %>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</center>
 
 <%@include file="footer.jsp" %>
 <%@include file="contactmodal.jsp" %>

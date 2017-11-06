@@ -45,8 +45,8 @@
 <div class="container">
     <div class="btn-group btn-group-justified round-corner-top">
         <a href="#" class="btn btn-default round-corner-top-left">Add work</a>
-        <a href="#" class="btn btn-default">Upload CSV</a>
-        <a href="#" class="btn btn-default round-corner-top-right">Update Database</a>
+        <a href="uploadcsv.jsp" class="btn btn-default">Upload CSV</a>
+        <a href="selectcsv.jsp" class="btn btn-default round-corner-top-right">Update Database</a>
     </div>
 
     <%
